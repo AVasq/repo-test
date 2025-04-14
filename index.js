@@ -1,3 +1,3 @@
-const saludo = () => {console.log("Hello");};
+const saludo = () => {console.log("Hello Teacher");};
 
 saludo()

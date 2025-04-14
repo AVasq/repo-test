@@ -1,5 +1,3 @@
-//Declaración de las clases a utilizar
-
 class Alimento{
     //Constructor
     constructor(id, horario, tipo, nombre, calorias, proteinas, carbohidratos, lipidos, precio, gramaje, descripcion){
@@ -44,7 +42,7 @@ class Alimento{
 
     //Métodos de clase
     descripcionNutricional(){
-        return `\nCalorías: ${this._calorias}kcal    Proteínas: ${this._proteinas}g    Carbohidratos: ${this._carbohidratos}g    Lípidos: ${this._lipidos}g\n`;
+        return `\n Nombre: ${this._nombre}    Calorías: ${this._calorias}kcal    Proteínas: ${this._proteinas}g    Carbohidratos: ${this._carbohidratos}g    Lípidos: ${this._lipidos}g\n`;
     }
 
     multiplicarFactor(factor){
@@ -59,6 +57,38 @@ class Alimento{
 }
 
 let alimento1 = new Alimento(1, "Almuerzo", "Vacuno", "Cazuela de Vacuno", 343, 28, 36, 10, 508, 172, "Una rica sopa de carne, papas y verduras")
-alimento1.descripcionNutricional();
-alimento1.multiplicarFactor(2);
-alimento1.descripcionNutricional();
+
+const { Pool } = require('pg');
+// Crea una nueva instancia de Pool
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'postgres',
+  password: 'postgres',
+  port: 5432
+});
+
+async function ejecutarQuery(query, params) {
+    const result = await pool.query(query, params);
+    const a = result.rows[0];
+    return new Alimento(a.id, a.horario, a.tipo, a.nombre, a.calorias, a.proteinas, a.carbohidratos, a.lipidos, a.precio, a.gramaje, a.descripcion);
+}
+
+async function obtenerAlimento() {
+    return await ejecutarQuery('SELECT * FROM "NutriApp"."alimento" ORDER BY RANDOM() LIMIT 1;');
+}
+
+async function insertarDiv() {
+    let alimento = await obtenerAlimento(); // Espera a que se obtenga el alimento
+    document.getElementById("contenedor").innerHTML = `
+        <h3>${alimento.horario}</h3>
+        <h1>${alimento.nombre}</h1>
+        <h2>${alimento.descripcionNutricional()}</h2>
+    `;
+}
+
+async function main() {
+    let alimento2 = await obtenerAlimento(); // Espera a que se obtenga el alimento
+    console.log(alimento2.descripcionNutricional()); // Ahora puedes llamar al método
+}
+main().catch(console.error); // Llama a la función main y maneja cualquier error
