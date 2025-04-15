@@ -45,7 +45,7 @@ class Alimento{
 
     //Métodos de clase
     descripcionNutricional(){
-        console.log(`\nCalorías: ${this._calorias}kcal    Proteínas: ${this._proteinas}g    Carbohidratos: ${this._carbohidratos}g    Lípidos: ${this._lipidos}g\n`);
+        return `\nCalorías: ${this._calorias}kcal    Proteínas: ${this._proteinas}g    Carbohidratos: ${this._carbohidratos}g    Lípidos: ${this._lipidos}g\n`;
     }
 
     multiplicarFactor(factor){
@@ -104,6 +104,7 @@ class Dia{
     set once(once){this._once = once;}
     set cena(cena){this._cena = cena;}
     
+    //Metodos de clase
     sumarCalorias(){
         this.caloriasTotales = this._desayuno.calorias + this._colacionManana.calorias + this._ensalada.calorias + this._almuerzo.calorias + this._postre.calorias + this._colacionTarde.calorias + this._once.calorias + this._cena.calorias;
     }
@@ -117,7 +118,7 @@ class Dia{
         this.lipidosTotales = this._desayuno.lipidos + this._colacionManana.lipidos + this._ensalada.lipidos + this._almuerzo.lipidos + this._postre.lipidos + this._colacionTarde.lipidos + this._once.lipidos + this._cena.lipidos;
     }
     sumarPrecio(){
-        this.precioTotal = this._desayuno.precio + this._colacionManana.precio + this._ensalada.precio + this._almuerzo.precio + this._postre.precio + this._colacionTarde.precio + this._once.prec
+        this.precioTotal = this._desayuno.precio + this._colacionManana.precio + this._ensalada.precio + this._almuerzo.precio + this._postre.precio + this._colacionTarde.precio + this._once.precio + this._cena.precio;
     }
 
 }
@@ -134,7 +135,7 @@ class Paciente{
         this._altura = altura;
         this._edad = edad;
         this._genero = genero;
-        this._actividadFisica = actFisica;actFisica;
+        this._actividadFisica = actFisica;
     }
     
     get peso(){return this._peso;}

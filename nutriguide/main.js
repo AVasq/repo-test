@@ -84,7 +84,7 @@ async function crearDia(param){
         let data2 = await obtenerAlimento('Cena'); // Consulta para cena
         let cena = new Alimento(data2.id, data2.horario, data2.tipo, data2.nombre, data2.calorias, data2.proteinas, data2.carbohidratos, data2.lipidos, data2.precio, data2.gramaje, data2.descripcion);
         
-        let data7 = await obtenerAlimento('Entrada'); // Consulta para la entrada del almuerzo
+        let data7 = await obtenerAlimento('Ensalada'); // Consulta para la entrada del almuerzo
         let entrada = new Alimento(data7.id, data7.horario, data7.tipo, data7.nombre, data7.calorias, data7.proteinas, data7.carbohidratos, data7.lipidos, data7.precio, data7.gramaje, data7.descripcion);
         
         let data8 = await obtenerAlimento('Postre'); // Consulta para el postre del almuerzo
@@ -120,20 +120,21 @@ function generarMatriz(filas, listaBase) {
 }
 
 
+
 //Funcion para generar lista con alimentos para todo el mes
+
 async function listaMes() {
     try {
         let mes = [];
-        const listaBase = ['Leguminosa', 'Vacuno', 'Ave', 'Vegetariano', 'Pescado', 'Leguminosa', 'Sopa']
+        const listaBase = ['Leguminosas', 'Vacuno', 'Ave', 'Acompañamiento', 'Pescado', 'Sopa', 'Pasta'];
         const listaMezclada = mezclarArray(listaBase);
         const matriz = generarMatriz(4, listaMezclada);
         //Iterar matriz:
-        for (let i = 0; i < 4; i++){
-            for (let j = 0; j < 7; j++){
-                let dia = await crearDia(matriz[i][j]);
-                //Aca abajo deberia ir la funcion que revisara si se cumple o no la adecuacion, antes de ingresarla a la lista mes
-                mes.push(dia);
-            }
+        const tiposAlmuerzo = matriz.flat();
+        // Iterar sobre cada tipo de almuerzo en el array aplanado
+        for (let tipoAlmuerzo of tiposAlmuerzo) {
+            let dia = await crearDia(tipoAlmuerzo); // Pasar el tipo de almuerzo a la función crearDia
+            mes.push(dia); // Agregar el día a la lista de días
         }
         return mes;
     } catch (error) {
@@ -143,21 +144,38 @@ async function listaMes() {
 }
 
 //funcion para insertar la info de la lista mes en divs individuales dentro del dom html
-async function insertarDivs(){
-    //leer lista mes:
-    let lista = await listaMes(); // Llama a la función para obtener la lista de alimentos del mes
-    let contenedor = document.getElementById("contenedor");
-    contenedor.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos divs
-    
-    lista.forEach((dia, index) => {
-        contenedor.innerHTML += `
+async function insertarDivs() {
+    try {
+        // Leer lista mes:
+        let lista = await listaMes(); // Llama a la función para obtener la lista de alimentos del mes
+        let contenedor = document.getElementById("contenedor");
+        contenedor.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos divs
+        // Iterar sobre la lista de días
+        lista.forEach((dia, index) => {
+            contenedor.innerHTML += `
                 <div class="dia">
                     <h2>Día ${index + 1}</h2>
                     <h3>Desayuno: ${dia.desayuno.nombre}</h3>
+                    <p>${dia.desayuno.descripcionNutricional()}</p>
+                    
+                    <h3>Colacion Mañana: ${dia.colacionManana.nombre}</h3>
+                    <p>${dia.colacionManana.descripcionNutricional()}</p>
+                    
                     <h3>Almuerzo: ${dia.almuerzo.nombre}</h3>
+                    <p>${dia.almuerzo.descripcionNutricional()}</p>
+                    
+                    <h3>Once: ${dia.once.nombre}</h3>
+                    <p>${dia.once.descripcionNutricional()}</p>
+                    
                     <h3>Cena: ${dia.cena.nombre}</h3>
-                    </hr>
+                    <p>${dia.cena.descripcionNutricional()}</p>
                 </div>
-            `; //Formatear esto para mostrar la info nutricional de cada tiempo de comida, su preparacion, imagenes, etc.
-    });
+            `;
+        });
+    } catch (error) {
+        console.error("Error al insertar los divs:", error);
+        // Puedes mostrar un mensaje al usuario si lo deseas
+        const contenedor = document.getElementById("contenedor");
+        contenedor.innerHTML = '<p>Ocurrió un error al cargar los datos. Por favor, inténtalo de nuevo más tarde.</p>';
+    }
 }
