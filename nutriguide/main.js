@@ -134,6 +134,7 @@ async function listaMes() {
         // Iterar sobre cada tipo de almuerzo en el array aplanado
         for (let tipoAlmuerzo of tiposAlmuerzo) {
             let dia = await crearDia(tipoAlmuerzo); // Pasar el tipo de almuerzo a la función crearDia
+            //Aca va la funcion que evaluara si el dia cumple la adecuacion, dentro de un (while !adecuacion)
             mes.push(dia); // Agregar el día a la lista de días
         }
         return mes;
@@ -178,4 +179,133 @@ async function insertarDivs() {
         const contenedor = document.getElementById("contenedor");
         contenedor.innerHTML = '<p>Ocurrió un error al cargar los datos. Por favor, inténtalo de nuevo más tarde.</p>';
     }
+}
+
+//Calculos dieteticos y validaciones:
+
+//Formula Harris Benedict
+
+function harrisBenedict(peso, altura, edad, sexo, actividadFisica){
+    //la formula recibira como parametros la altura, peso, edad y el sexo del individuo.
+    //Sexo: 1 = hombre ; 2 = mujer 
+    //peso en kgs
+    //altura en cms
+    //edad en años
+    let tmb = 0; //tasa metabolica basal inicializada en 0
+    if (sexo === 1){
+        tmb = 66 + (13.7 * peso) + (5 * altura) - (6.8 * edad); //Formula en sexo masculino
+    }
+    else if (sexo === 2){
+        tmb = 655 + (9.6 * peso) + (1.8 * altura) - (4.7 * edad);//Formula en sexo femenino
+    }
+
+    let resultado = Math.round(tmb * 0.8 * actividadFisica); //Se resta un 20% de la tasa metabolica basal y se multiplica por la act. fisica
+    console.log(resultado)
+    
+    if (isNaN(resultado)){
+        return 'Resultado no es un Número, favor revise si los argumentos son válidos';
+    } else return resultado;
+      //revisar condiciones si este resultado es NaN.
+    
+}
+
+function actividadFisica(param){
+    let nivelActividad = param.toUpperCase();
+    let actividad = ['SEDENTARIO', 'POCO ACTIVO', 'MODERADO', 'ACTIVO', 'MUY ACTIVO'];
+    let factor = [1.2, 1.375, 1.55, 1.725, 1.9];
+
+    if (actividad.includes(nivelActividad)){
+        for (i = 0; i < actividad.length ; i++){
+            if (actividad[i] === nivelActividad){
+                return factor[i];
+            }
+        }
+    } else {return 'Favor introduzca un valor válido'}
+    
+}
+
+
+function sexo(sexo){
+    //Funcion para transformar el valor recibido por el front a un numero (1 o 2):
+    let sexoMayus = sexo.toUpperCase(); //transforma en mayuscula el valor recibido por parametro
+    let masculino = ['HOMBRE', 'MASCULINO']; //opciones validas para el sexo masculino
+    let femenino = ['MUJER', 'FEMENINO']; //opciones validas para el genero femenino
+    let genero = 0; //inicializamos variable que sera retornada en caso positivo
+    if (masculino.includes(sexoMayus)){
+        genero = 1;
+    } 
+    else if (femenino.includes(sexoMayus)){
+        genero = 2;
+    }
+    else {return 'Genero inválido'};
+
+    return genero;
+}
+
+
+function edad(edad){
+    //revisamos que la edad este en el rango de adultez:
+    if ((edad >= 18) && (edad < 60)){
+        return edad;
+    }
+    else {return 'Valor inválido; no corresponde a la edad adulta'}
+}
+
+
+function altura(altura){
+    //revisamos que el paciente tenga anotados sus datos de altura en centimetros:
+    if ((altura > 121) && (altura < 275)){
+        return altura;
+    } else return 'Por favor, escriba la altura en centimetros.';
+}
+
+function peso(peso){ //Se revisa que el paciente tenga el peso dentro del rango a trabajar.
+    if ((peso >= 20) && (peso < 200)){
+        return peso;
+    } else return 'Por favor indique su peso correctamente (en Kilogramos).'
+}
+
+function imc(peso, altura){ //Clasifica el IMC del individuo segun la formula.
+    
+    let resultado = '';
+    let talla = altura/100;
+    let indMasaCorp = peso/(talla*talla);
+
+    if (indMasaCorp >= 50){
+        resultado = 'Obesidad IV';
+    }
+    else if (indMasaCorp >= 40){
+        resultado = 'Obesidad III';
+    }
+    else if (indMasaCorp >= 35){
+        resultado = 'Obesidad II';
+    }
+    else if (indMasaCorp >= 30){
+        resultado = 'Obesidad I';
+    }
+    else if (indMasaCorp >= 25){
+        resultado = 'Sobrepeso';
+    }
+    else if (indMasaCorp >= 18.5){
+        resultado = 'Normal';
+    } else {
+        resultado = 'Bajo Peso'
+    }
+
+    return resultado;
+
+}
+
+function requerimiento(funcion){ //Esta funcion recibe de parametro el resultado de la funcion Harris-Benedict 
+// y almacena los requerimientos de energia, proteina, carbohidratos y lipidos en una lista.
+    
+    let listaRequerimientos = [];
+    let calorias = funcion;
+    let proteinas =(funcion*0.4)/4;
+    let carbos = (funcion*0.3)/4;
+    let lipidos = (funcion*0.3)/9;
+
+    listaRequerimientos.push(calorias, Math.round(proteinas), Math.round(carbos), Math.round(lipidos));
+    
+    return listaRequerimientos;
 }
