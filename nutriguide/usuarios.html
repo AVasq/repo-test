@@ -9,7 +9,7 @@
 <body>
     <h1>Registro de Usuarios</h1>
     <div>
-        <form action="mi_servidor" autocomplete="off"><!--Si solo agregamos form, no se visualiza nada dentro del navegador-->
+        <form id = "formulario" action="mi_servidor" autocomplete="off"><!--Si solo agregamos form, no se visualiza nada dentro del navegador-->
             <fieldset>
                 <legend>Datos Personales: </legend>
                 <label for="nombre">Nombre: </label></br>
@@ -22,10 +22,10 @@
                 <input type="text" id="rut" name="rut" placeholder="Ingrese su Rut" required="true"><br>
                 <label for="correo">Correo Electrónico: </label><br>
                 <input type="email" id="correo" name="correo" placeholder="Example@mail.com" required="true"><br>
-                <label for="contraseña">Contraseña: </label><br>
-                <input type="password" id="contraseña" name="contraseña" placeholder="Escriba su Contraseña" required="true"><br>
-                <label for="contraseña">Contraseña: </label><br>
-                <input type="password" id="contraseña" name="contraseña" placeholder="Repita la Contraseña" required="true"><br>
+                <label for="contraseña1">Contraseña: </label><br>
+                <input type="password" id="contraseña1" name="contraseña1" placeholder="Escriba su Contraseña" required="true"><br>
+                <label for="contraseña2">Contraseña: </label><br>
+                <input type="password" id="contraseña2" name="contraseña2" placeholder="Repita la Contraseña" required="true"><br>
                 
                 <br/>
                 <br/>
@@ -35,6 +35,11 @@
                 <input type="reset" value="restablecer"/>
             </fieldset>
         </form>
-    </div> 
+    </div>
+    <button onclick="mostrarValores()">Presiona Acá</button> 
+    <button onclick="pruebas()">Revisar validez de datos</button>
+    <div id="divDatos"></div>
+    <div id="prueba"></div>
+    <script src="datosNutri.js"></script>
 </body>
 </html>
