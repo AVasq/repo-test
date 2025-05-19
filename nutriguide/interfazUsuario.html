@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriGuide Portal de Usuario</title>
+    <link rel="stylesheet" href="interfazUsuario.css"/>
+</head>
+<body>
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="entrada.html">Inicio</a> |
+            <a href="registroUsuarios.html">Registrarse</a> |
+            <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+        </p>
+    </nav>
+    <div id="welcome">
+        <h2 id="bienvenida"></h2>
+        <p id="opciones"></p>
+        <button id="Añadir Paciente" onclick="anadirPaciente()">Añadir Paciente</button>
+    </div>
+    <div id="pacientes"></div>
+    <div id="detallePacientes"></div>
+    <script type="module">
+        import { Paciente } from './clases.js';
+        import { protegerRuta, cerrarSesion } from './sesion.js';
+
+        protegerRuta();
+        window.cerrarSesion = cerrarSesion;
+                window.onload = async function() {
+                    const usuarioData = localStorage.getItem('usuario');
+                    if (usuarioData) {
+                        const usuario = JSON.parse(usuarioData);
+                        document.getElementById("bienvenida").innerText = `Bienvenido, ${usuario.nombre} ${usuario.apellido}`;
+                        document.getElementById("opciones").innerText = `${usuario.nombre}, puedes añadir a tus pacientes acá`;
+                        await obtenerPacientes(usuario.id);
+                    } else {
+                        document.getElementById("bienvenida").innerText = "No hay ningún usuario Loggeado";
+                    }
+                };
+
+
+        async function obtenerPacientes(nutriId) {
+        try {
+            const resp = await fetch(`http://localhost:3000/api/paciente?nutri_id=${encodeURIComponent(nutriId)}`);
+            if (!resp.ok) throw new Error(await resp.text());
+            const pacientes = await resp.json();
+            const div = document.getElementById('pacientes');
+            
+            if (pacientes.length === 0) {
+            div.innerHTML = '<p>Aún no tienes pacientes registrados</p>';
+            return;
+            }
+            
+            let html = `
+            <table class="mi-tabla">
+                <caption>Listado de Pacientes</caption>
+                <thead>
+                <tr>
+                    <th>Nombre</th><th>Apellido</th><th>Rut</th>
+                    <th>Género</th><th>Edad</th><th>Peso</th><th>Altura</th>
+                </tr>
+                </thead>
+                <tbody>
+            `;
+            
+            pacientes.forEach(raw => {
+
+            const sexoStr = raw.sexo === 1 ? 'Masculino' : 'Femenino';
+            
+            const dataEscapada = JSON.stringify(raw).replace(/"/g, '&quot;');
+            
+            html += `
+                <tr onclick="mostrarDetalles(JSON.parse('${dataEscapada}'))">
+                <td>${raw.nombre}</td>
+                <td>${raw.apellido}</td>
+                <td>${raw.rut}</td>
+                <td>${sexoStr}</td>
+                <td>${raw.edad}</td>
+                <td>${raw.peso}</td>
+                <td>${raw.altura}</td>
+                </tr>
+            `;
+            });
+            
+            html += `</tbody></table>`;
+            div.innerHTML = html;
+        } catch (err) {
+            console.error(err);
+            document.getElementById('pacientes').innerHTML = '<p>Error al cargar los pacientes.</p>';
+        }
+        }
+
+
+        function mostrarDetalles(raw) {
+    const m = {
+    id:             raw.id,
+    nutri_id:       raw.nutri_id,
+    nombre:         raw.nombre,
+    apellido:       raw.apellido,
+    rut:            raw.rut,
+    peso:           raw.peso,
+    altura:         raw.altura,
+    sexo:           raw.sexo,
+    edad:           raw.edad,
+    actFisica:      raw.actfisica,                
+    pliegueTricipital:   raw.plieguetricipital,
+    pliegueSubescapular: raw.plieguesubescapular,
+    pliegueSupraIliaco:  raw.plieguesuprailiaco,
+    pliegueBicipital:    raw.plieguebicipital,
+    circunferenciaBraquial: raw.circunferenciabraquial,
+    circunferenciaCintura:  raw.circunferenciacintura,
+    necesidad:       raw.necesidad,
+    calorias:  raw.calorias,
+    proteinas: raw.proteinas,
+    carbohidratos: raw.carbohidratos,
+    lipidos:   raw.lipidos
+  };
+
+  const paciente = new Paciente(
+    m.id, m.nutri_id, m.nombre, m.apellido, m.rut,
+    m.peso, m.altura, m.sexo, m.edad,
+    m.actFisica,
+    m.pliegueTricipital, m.pliegueSubescapular,
+    m.pliegueSupraIliaco, m.pliegueBicipital,
+    m.circunferenciaBraquial, m.circunferenciaCintura,
+    m.necesidad
+  );
+
+    document.getElementById("detallePacientes").innerHTML = `
+      <div class="paciente">
+        <h3 id="nombrePaciente">
+          Paciente ${paciente.nombre} ${paciente.apellido}
+        </h3>
+        <p id="datosGenerales">
+          Rut: ${paciente.rut} | Género: ${paciente.sexo} | Edad: ${paciente.edad}
+        </p>
+
+        <h3>Requerimientos Nutricionales</h3>
+        <table class="tablaPaciente">
+          <tr>
+            <th>Calorías</th>
+            <th>Proteínas (g/día)</th>
+            <th>Carbohidratos (g/día)</th>
+            <th>Lípidos (g/día)</th>
+          </tr>
+          <tr>
+            <td>${paciente.harrisBenedict()}</td>
+            <td>${Math.round(paciente.proteinas())}</td>
+            <td>${Math.round(paciente.carbohidratos())}</td>
+            <td>${Math.round(paciente.lipidos())}</td>
+          </tr>
+        </table>
+
+        <h3 id="antropometria">Datos Antropométricos</h3>
+        <p id="datos_base">
+          Peso: ${paciente.peso} kg | Talla: ${paciente.altura} cm | 
+          Circunf. Brazo: ${paciente.circunferenciaBraquial} cm | 
+          Circunf. Cintura: ${paciente.circunferenciaCintura} cm
+        </p>
+        <p id="datos_pliegues">
+          P. Tricipital: ${paciente.pliegueTricipital} mm | 
+          P. Bicipital: ${paciente.pliegueBicipital} mm | 
+          P. Suprailiaco: ${paciente.pliegueSupraIliaco} mm | 
+          P. Subescapular: ${paciente.pliegueSubescapular} mm
+        </p>
+
+        <h3 id="interpretacion">Interpretación Antropométrica</h3>
+        <p id="imc">
+          IMC: ${Math.round(paciente.imc())} →
+          ${paciente.clasificacionImc()}
+        </p>
+        <p id="pct">
+          ${paciente.clasificacionPCT()} según P. Tricipital
+        </p>
+        <p id="cmb">
+          CMB: ${Math.round(paciente.cmb())} cm
+        </p>
+        <p id="amb">
+          Área Muscular Braquial: ${Math.round(paciente.amb())} cm²
+        </p>
+        <p id="amb-clasificacion">
+          ${paciente.clasificacionAMB()} según AMB
+        </p>
+        <p id="ccc">
+          ${paciente.clasificacionCC()}
+        </p>
+        <p id="dc">
+          Densidad Corporal: ${paciente.densidadCorporal().toFixed(3)}
+        </p>
+        <p id="grasa">
+          Porcentaje Grasa Corporal: ${paciente.porcentajeGrasaCorporal().toFixed(3)} %
+        </p>
+        <p id="cGC">
+          ${paciente.clasificacionGC()}
+        </p>
+        </br>
+        <div class="recomendacion-gpt">
+            <h2>Recomendación de NutriGuide:</h2>
+            <p id="gpt-guia">Cargando recomendación…</p>
+        </div>
+        </br>
+        <button id="actualizarDatos">Actualizar Datos del Paciente</button>
+        <button
+          id="generarDieta"
+          onclick="generarDieta(${JSON.stringify(raw).replace(/"/g,'&quot;')})"
+        >
+          Generar Plan Dietético Mensual
+        </button>
+        <button id="irAnamnesis">Anamnesis del Paciente</button>
+      </div>
+    `;
+    document
+    .getElementById('actualizarDatos')
+    .addEventListener('click', () => {
+      localStorage.setItem('pacienteEditar', JSON.stringify(m));
+      window.location.href = 'formulario2.html';
+    });
+    document
+    .getElementById('irAnamnesis')
+    .addEventListener('click', () => {
+      localStorage.setItem('pacienteAnamnesis', JSON.stringify(m));
+      window.location.href = 'anamnesis.html';
+    });
+    obtenerRecomendacionGPT(paciente);
+    }
+        
+    async function obtenerRecomendacionGPT(paciente) {
+  const prompt = `
+Eres un nutricionista EXPERTO en obesidad, sobrepeso, alergias alimentarias, alimentación y ejercicio físico. 
+Basándote en los datos clínicos y antropométricos de este paciente, proporciona en **no más de tres párrafos** 
+recomendaciones prácticas y fundamentadas en evidencia para el nutricionista que lo atiende.
+
+Datos del paciente:
+- Calorías diarias estimadas: ${paciente.harrisBenedict()}
+- Proteínas diarias (g): ${Math.round(paciente.proteinas())}
+- Carbohidratos diarios (g): ${Math.round(paciente.carbohidratos())}
+- Lípidos diarios (g): ${Math.round(paciente.lipidos())}
+- IMC: ${Math.round(paciente.imc())} (${paciente.clasificacionImc()})
+- Clasificación PCT: ${paciente.clasificacionPCT()}
+- Clasificación CC: ${paciente.clasificacionCC()}
+- Área Muscular Braquial (AMB): ${Math.round(paciente.amb())} cm² (${paciente.clasificacionAMB()})
+
+Por favor, ofrece tips de intervención nutricional y de actividad física, basados en datos científicos, 
+sin especulaciones.
+  `.trim();
+
+  try {
+    const res = await fetch('http://localhost:3000/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mensaje: prompt })
+    });
+    if (!res.ok) throw new Error(await res.text());
+    const { respuesta } = await res.json();
+    document.getElementById('gpt-guia').innerText = respuesta;
+  } catch (err) {
+    console.error('Error GPT:', err);
+    document.getElementById('gpt-guia').innerText = 'No se pudo cargar la recomendación.';
+  }
+}
+
+  window.mostrarDetalles = mostrarDetalles;
+
+        function generarDieta(pacienteSeleccionado) {
+            const minimal = {
+            nombre:        pacienteSeleccionado.nombre,
+            apellido:      pacienteSeleccionado.apellido,
+            calorias:      Math.round(pacienteSeleccionado.calorias),
+            proteinas:     Math.round(pacienteSeleccionado.protes),
+            carbohidratos: Math.round(pacienteSeleccionado.carbos),
+            lipidos:       Math.round(pacienteSeleccionado.lipis)
+          };
+          localStorage.setItem('pacienteSeleccionado', JSON.stringify(minimal));
+          window.location.href = 'dietas.html';
+        }
+        function anadirPaciente() {
+            window.location.href = 'formulario.html';
+        }
+        window.generarDieta = generarDieta;
+        window.anadirPaciente = anadirPaciente;
+    </script>
+    <script type="module" src="sesion.js"></script>
+    <script type="module" src="interfazUsuario.js"></script>
+    <script src="clases.js"></script>
+
+</body>
+</html>

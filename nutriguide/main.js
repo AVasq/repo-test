@@ -1,187 +1,382 @@
 
-/*
-async function insertarDiv() {
-    
-    try {
-        let data3 = await obtenerAlimento('Desayuno'); // Consulta para desayuno
-        let desayuno = new Alimento(data3.id, data3.horario, data3.tipo, data3.nombre, data3.calorias, data3.proteinas, data3.carbohidratos, data3.lipidos, data3.precio, data3.gramaje, data3.descripcion);
-        
-        let data4 = await obtenerAlimento('Colacion'); // Consulta para colacion Mañana
-        let colacionManana = new Alimento(data4.id, data4.horario, data4.tipo, data4.nombre, data4.calorias, data4.proteinas, data4.carbohidratos, data4.lipidos, data4.precio, data4.gramaje, data4.descripcion);
-        
-        // Obtiene un alimento para el almuerzo
-        let data = await obtenerAlimento('Almuerzo'); // Consulta para almuerzo
-        let almuerzo = new Alimento(data.id, data.horario, data.tipo, data.nombre, data.calorias, data.proteinas, data.carbohidratos, data.lipidos, data.precio, data.gramaje, data.descripcion);
-        
-        let data5 = await obtenerAlimento('Colacion'); // Consulta para colacion Tarde
-        let colacionTarde = new Alimento(data5.id, data5.horario, data5.tipo, data5.nombre, data5.calorias, data5.proteinas, data5.carbohidratos, data5.lipidos, data5.precio, data5.gramaje, data5.descripcion);
-        
-        let data6 = await obtenerAlimento('Once'); // Consulta para once
-        let once = new Alimento(data6.id, data6.horario, data6.tipo, data6.nombre, data6.calorias, data6.proteinas, data6.carbohidratos, data6.lipidos, data6.precio, data6.gramaje, data6.descripcion);
-        
-        // Obtiene un alimento para la cena
-        let data2 = await obtenerAlimento('Cena'); // Consulta para cena
-        let cena = new Alimento(data2.id, data2.horario, data2.tipo, data2.nombre, data2.calorias, data2.proteinas, data2.carbohidratos, data2.lipidos, data2.precio, data2.gramaje, data2.descripcion);
-        
-
-        // Muestra los alimentos en el contenedor
-        document.getElementById("contenedor").innerHTML = `
-            <h3>${desayuno.horario}</h3>
-            <h1>${desayuno.nombre}</h1>
-            <h2>Calorías: ${desayuno.calorias} kcal, Proteínas: ${desayuno.proteinas} g, Carbohidratos: ${desayuno.carbohidratos} g, Lípidos: ${desayuno.lipidos} g</h2>
-            <br>
-            <h3>${colacionManana.horario}</h3>
-            <h1>${colacionManana.nombre}</h1>
-            <h2>Calorías: ${colacionManana.calorias} kcal, Proteínas: ${colacionManana.proteinas} g, Carbohidratos: ${colacionManana.carbohidratos} g, Lípidos: ${colacionManana.lipidos} g</h2>
-            <br>
-            <hr>
-            <h3>${almuerzo.horario}</h3>
-            <h1>${almuerzo.nombre}</h1>
-            <h2>Calorías: ${almuerzo.calorias} kcal, Proteínas: ${almuerzo.proteinas} g, Carbohidratos: ${almuerzo.carbohidratos} g, Lípidos: ${almuerzo.lipidos} g</h2>
-            <br>
-            <hr>
-            <h3>${colacionTarde.horario}</h3>
-            <h1>${colacionTarde.nombre}</h1>
-            <h2>Calorías: ${colacionTarde.calorias} kcal, Proteínas: ${colacionTarde.proteinas} g, Carbohidratos: ${colacionTarde.carbohidratos} g, Lípidos: ${colacionTarde.lipidos} g</h2>
-            <br>
-            <hr>
-            <h3>${once.horario}</h3>
-            <h1>${once.nombre}</h1>
-            <h2>Calorías: ${once.calorias} kcal, Proteínas: ${once.proteinas} g, Carbohidratos: ${once.carbohidratos} g, Lípidos: ${once.lipidos} g</h2>
-            <br>
-            <hr>
-            <h3>${cena.horario}</h3>
-            <h1>${cena.nombre}</h1>
-            <h2>Calorías: ${cena.calorias} kcal, Proteínas: ${cena.proteinas} g, Carbohidratos: ${cena.carbohidratos} g, Lípidos: ${cena.lipidos} g</h2>
-            <br>
-            <hr>
-        `;
-    } catch (error) {
-        console.error(error);
-        document.getElementById("contenedor").innerHTML = `<h2>Error al obtener el alimento</h2>`;
-    }
-}*/
-
-async function crearDia(param){
-    try {
-        let data3 = await obtenerAlimento('Desayuno'); // Consulta para desayuno
-        let desayuno = new Alimento(data3.id, data3.horario, data3.tipo, data3.nombre, data3.calorias, data3.proteinas, data3.carbohidratos, data3.lipidos, data3.precio, data3.gramaje, data3.descripcion);
-        
-        let data4 = await obtenerAlimento('Colacion'); // Consulta para colacion Mañana
-        let colacionManana = new Alimento(data4.id, data4.horario, data4.tipo, data4.nombre, data4.calorias, data4.proteinas, data4.carbohidratos, data4.lipidos, data4.precio, data4.gramaje, data4.descripcion);
-        
-        // Obtiene un alimento para el almuerzo
-        let data = await obtenerAlimentoTipo('Almuerzo', param); // Consulta para almuerzo
-        let almuerzo = new Alimento(data.id, data.horario, data.tipo, data.nombre, data.calorias, data.proteinas, data.carbohidratos, data.lipidos, data.precio, data.gramaje, data.descripcion);
-        
-        let data5 = await obtenerAlimento('Colacion'); // Consulta para colacion Tarde
-        let colacionTarde = new Alimento(data5.id, data5.horario, data5.tipo, data5.nombre, data5.calorias, data5.proteinas, data5.carbohidratos, data5.lipidos, data5.precio, data5.gramaje, data5.descripcion);
-        
-        let data6 = await obtenerAlimento('Once'); // Consulta para once
-        let once = new Alimento(data6.id, data6.horario, data6.tipo, data6.nombre, data6.calorias, data6.proteinas, data6.carbohidratos, data6.lipidos, data6.precio, data6.gramaje, data6.descripcion);
-        
-        // Obtiene un alimento para la cena
-        let data2 = await obtenerAlimento('Cena'); // Consulta para cena
-        let cena = new Alimento(data2.id, data2.horario, data2.tipo, data2.nombre, data2.calorias, data2.proteinas, data2.carbohidratos, data2.lipidos, data2.precio, data2.gramaje, data2.descripcion);
-        
-        let data7 = await obtenerAlimento('Ensalada'); // Consulta para la entrada del almuerzo
-        let entrada = new Alimento(data7.id, data7.horario, data7.tipo, data7.nombre, data7.calorias, data7.proteinas, data7.carbohidratos, data7.lipidos, data7.precio, data7.gramaje, data7.descripcion);
-        
-        let data8 = await obtenerAlimento('Postre'); // Consulta para el postre del almuerzo
-        let postre = new Alimento(data8.id, data8.horario, data8.tipo, data8.nombre, data8.calorias, data8.proteinas, data8.carbohidratos, data8.lipidos, data8.precio, data8.gramaje, data8.descripcion);
-        
-        let dia = new Dia(desayuno, colacionManana, entrada, almuerzo, postre, colacionTarde, once, cena);
-        return dia;
-
-    } catch (error) {
-        console.error(error);
-        console.log("Error al obtener el dia");
-    }
+async function obtenerAlimentoPorHorarioYPlato(horario, plato) {
+    const resp = await fetch(
+      `http://localhost:3000/api/alimento?horario=${encodeURIComponent(horario)}&plato=${encodeURIComponent(plato)}`
+    );
+    if (!resp.ok) throw new Error('No se pudo obtener el alimento');
+    return resp.json();
+  }
+  
+  async function obtenerAlimentoPorHorarioYPlatoDiferenteTipo(horario, plato, tipoExcluido) {
+    const resp = await fetch(
+      `http://localhost:3000/api/alimento?horario=${encodeURIComponent(horario)}&plato=${encodeURIComponent(plato)}&tipoExcluido=${encodeURIComponent(tipoExcluido)}`
+    );
+    if (!resp.ok) throw new Error('No se pudo obtener el acompañamiento');
+    return resp.json();
+  }
+  
+  async function obtenerAlimentoPorHorarioYPlatoYTipoExcluido(horario, plato, tipoExcluido) {
+    const query = 'SELECT * FROM "NutriApp"."alimento" WHERE horario = $1 AND plato = $2 AND tipo <> $3 ORDER BY RANDOM() LIMIT 1;';
+    const result = await pool.query(query, [horario, plato, tipoExcluido]);
+    return result.rows[0]; 
 }
 
-//Algoritmo de Fisher-Yates para mezclar lista base:
-function mezclarArray(array) {
-    let copia = array.slice(); // Copiamos el array original
-    for (let i = copia.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copia[i], copia[j]] = [copia[j], copia[i]]; // Intercambia elementos
-    }
-    return copia;
+async function obtenerAlimentoPorHorarioYPlatoYTipo(horario, plato, tipo) {
+    const query = 'SELECT * FROM "NutriApp"."alimento" WHERE horario = $1 AND plato = $2 AND tipo = $3 ORDER BY RANDOM() LIMIT 1;';
+    const result = await pool.query(query, [horario, plato, tipo]);
+    return result.rows[0]; 
+}
+
+async function obtenerAlimentoPorHorarioPlatoYTipos(horarios, plato, tiposPermitidos, alimentosSeleccionados) {
+    const query = `
+        SELECT * FROM "NutriApp"."alimento"
+        WHERE horario = ANY($1) AND plato = $2 AND tipo = ANY($3) AND nombre <> ANY($4)
+        ORDER BY RANDOM() LIMIT 1;
+    `;
+    const result = await pool.query(query, [horarios, plato, tiposPermitidos, alimentosSeleccionados]);
+    return result.rows[0] || null; 
 }
   
-//Funcion para generar matriz a iterar:
-function generarMatriz(filas, listaBase) {
-    const matriz = [];
+
+function toAlimento(a) {
+    return new Alimento(
+      a.id, a.horario, a.plato, a.tipo, a.nombre,
+      a.calorias, a.proteinas, a.carbohidratos, a.lipidos,
+      a.precio, a.gramaje, a.categoria, a.acompanamiento, a.descripcion
+    );
+  }
+  
+  async function obtenerAlimentosDesayuno() {
+    const resp = await fetch('http://localhost:3000/api/alimento/desayuno');
+    if (!resp.ok) throw new Error('Error al obtener desayuno');
+    const { fondo, acompanamiento, bebestible } = await resp.json();
+    return {
+      fondo: toAlimento(fondo),
+      acompanamiento: toAlimento(acompanamiento),
+      bebestible: toAlimento(bebestible)
+    };
+  }
+  
+  async function obtenerAlimentosColacionManana() {
+    const resp = await fetch('http://localhost:3000/api/alimento/colacionManana');
+    if (!resp.ok) throw new Error('Error al obtener colación mañana');
+    const { fondo, acompanamiento, fruta, bebestible } = await resp.json();
+    return {
+      fondo: toAlimento(fondo),
+      acompanamiento: toAlimento(acompanamiento),
+      fruta: toAlimento(fruta),
+      bebestible: toAlimento(bebestible)
+    };
+  }
+
+ 
+function toAlimento(a) {
+  return new Alimento(
+    a.id, a.horario, a.plato, a.tipo, a.nombre,
+    a.calorias, a.proteinas, a.carbohidratos, a.lipidos,
+    a.precio, a.gramaje, a.categoria, a.acompanamiento, a.descripcion
+  );
+}
+
+async function obtenerAlimentosAlmuerzo(tipo) {
+  const url = `http://localhost:3000/api/alimento/almuerzo?tipo=${encodeURIComponent(tipo)}`;
+
+  const resp = await fetch(url);
+  if (!resp.ok) {
+    const mensaje = await resp.text();
+    throw new Error(`Error al obtener almuerzo: ${mensaje}`);
+  }
+
+  const data = await resp.json();
+  console.log('almuerzo recibido del API:', data);
+  const entrada       = toAlimento(data.entrada);
+  const fondo         = toAlimento(data.fondo);
+  const acompanamiento= data.acompanamiento
+                         ? toAlimento(data.acompanamiento)
+                         : null;
+  const postre        = toAlimento(data.postre);
+  const bebestible    = toAlimento(data.bebestible);
+  return { entrada, fondo, acompanamiento, postre, bebestible };
+}
+
+
+  
+  async function obtenerAlimentoColacionTarde() {
+    const resp = await fetch('http://localhost:3000/api/alimento/colacionTarde');
+    if (!resp.ok) throw new Error('Error al obtener colación tarde');
+    const a = await resp.json();
+    return toAlimento(a);
+  }
+  
+  async function obtenerAlimentosOnce() {
+    const resp = await fetch('http://localhost:3000/api/alimento/once');
+    if (!resp.ok) throw new Error('Error al obtener once');
+    const { fondo: aF, acompanamiento: aA } = await resp.json();
+  
+    const fondo = aF ? toAlimento(aF) : null;
+    const acompanamiento = (aA ? toAlimento(aA) : fondo);
+  
+    return { fondo, acompanamiento };
+  }
+  
+  async function obtenerAlimentosCena() {
+    const resp = await fetch('http://localhost:3000/api/alimento/cena');
+    if (!resp.ok) throw new Error('Error al obtener cena');
+    const { fondo, acompanamiento } = await resp.json();
+    return {
+      fondo: toAlimento(fondo),
+      acompanamiento: toAlimento(acompanamiento)
+    };
+  }
+
+  async function crearDia(tipoAlmuerzo) {
+    const { fondo: dF, acompanamiento: dA, bebestible: dB } = await obtenerAlimentosDesayuno();
+    const desayuno = [ dF, dA, dB ];
+  
+    const { fondo: cMF, acompanamiento: cMA, fruta: cFr, bebestible: cMB } =
+      await obtenerAlimentosColacionManana();
+    const colacionManana = [ cMF, cMA, cFr, cMB ];
+  
+    const { entrada, fondo, acompanamiento, postre, bebestible } =
+      await obtenerAlimentosAlmuerzo(tipoAlmuerzo);
+    const almuerzo = [ entrada, fondo, acompanamiento, postre, bebestible ];
+  
+    const ct = await obtenerAlimentoColacionTarde();
+  
+    const { fondo: oF, acompanamiento: oA } = await obtenerAlimentosOnce();
+    const once = [ oF, oA ];
+  
+    const { fondo: ceF, acompanamiento: ceA } = await obtenerAlimentosCena();
+    const cena = [ ceF, ceA ];
+  
+    const paciente = JSON.parse(localStorage.getItem('pacienteSeleccionado'));
+    return new Dia(
+      desayuno[0], desayuno[1], desayuno[2],
+      colacionManana[0], colacionManana[1], colacionManana[2], colacionManana[3],
+      entrada, fondo, acompanamiento, postre, bebestible,
+      ct,
+      once[0], once[1],
+      cena[0], cena[1],
+      paciente
+    );
+  }
+
+  function mezclarArray(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  
+  function generarMatriz(filas, base) {
+    const m = [];
     for (let i = 0; i < filas; i++) {
-      const filaAleatoria = mezclarArray(listaBase);
-      matriz.push(filaAleatoria);
+      m.push(mezclarArray(base));
     }
-    return matriz;
-}
+    return m;
+  }
 
 
+  async function listaMes() {
+    const meses = [];
+    const tipos = ['Leguminosas','Vacuno','Ave','Pescado','Sopa','Hipercalorico'];
+    const matriz = generarMatriz(4, tipos).flat();
+  
+    let usedFondosSemana = new Set();
+  
+    for (let i = 0; i < matriz.length; i++) {
+      if (i % 7 === 0) {
+        usedFondosSemana.clear();
+      }
+  
+      const tipoAlmuerzo = matriz[i];
+      let dia, intentos = 0;
+  
+      do {
+        dia = await crearDia(tipoAlmuerzo);
+        intentos++;
+      } while (usedFondosSemana.has(dia.almuerzoFondo.nombre) && intentos < 50);
+  
+      usedFondosSemana.add(dia.almuerzoFondo.nombre);
+  
+      await dia.ajustarNutrientes();
+  
+      meses.push(dia);
+    }
+  
+    return meses;
+  }
+  
+  
 
-//Funcion para generar lista con alimentos para todo el mes
-
-async function listaMes() {
-    try {
-        let mes = [];
-        const listaBase = ['Leguminosas', 'Vacuno', 'Ave', 'Acompañamiento', 'Pescado', 'Sopa', 'Pasta'];
-        const listaMezclada = mezclarArray(listaBase);
-        const matriz = generarMatriz(4, listaMezclada);
-        //Iterar matriz:
-        const tiposAlmuerzo = matriz.flat();
-        // Iterar sobre cada tipo de almuerzo en el array aplanado
-        for (let tipoAlmuerzo of tiposAlmuerzo) {
-            let dia = await crearDia(tipoAlmuerzo); // Pasar el tipo de almuerzo a la función crearDia
-            //Aca va la funcion que evaluara si el dia cumple la adecuacion, dentro de un (while !adecuacion)
-            mes.push(dia); // Agregar el día a la lista de días
+function adecuarNutrientes() {
+    let factorProteinas, factorCarbos, factorLipidos;
+    if (this.adecuacionProteinas() < 90 || this.adecuacionProteinas() > 110) {
+        factorProteinas = this.factorAdecuacion(this.paciente.proteinas, this.proteinasTotales);
+    }
+    if (this.adecuacionCarbohidratos() < 90 || this.adecuacionCarbohidratos() > 110) {
+        factorCarbos = this.factorAdecuacion(this.paciente.carbohidratos, this.carbohidratosTotales);
+    }
+    if (this.adecuacionLipidos() < 90 || this.adecuacionLipidos() > 110) {
+        factorLipidos = this.factorAdecuacion(this.paciente.lipidos, this.lipidosTotales);
+    }
+    const alimentos = [this.desayuno, this.colacionManana, this.ensalada, this.almuerzo, this.postre, this.colacionTarde, this.once, this.cena];
+    for (let alimento of alimentos) {
+        if (factorProteinas) {
+            if (alimento.proteinas < alimento.carbohidratos && alimento.proteinas < alimento.lipidos) {
+                alimento.multiplicarFactor(factorProteinas);
+            } else if (alimento.proteinas > alimento.carbohidratos && alimento.proteinas > alimento.lipidos) {
+                alimento.multiplicarFactor(1 / factorProteinas);
+            }
         }
-        return mes;
-    } catch (error) {
-        console.error(error);
-        console.log("Error al generar lista de los alimentos del mes");
+        if (factorCarbos) {
+            if (alimento.carbohidratos < alimento.proteinas && alimento.carbohidratos < alimento.lipidos) {
+                alimento.multiplicarFactor(factorCarbos);
+            } else if (alimento.carbohidratos > alimento.proteinas && alimento.carbohidratos > alimento.lipidos) {
+                alimento.multiplicarFactor(1 / factorCarbos);
+            }
+        }
+        if (factorLipidos) {
+            if (alimento.lipidos < alimento.proteinas && alimento.lipidos < alimento.carbohidratos) {
+                alimento.multiplicarFactor(factorLipidos);
+            } else if (alimento.lipidos > alimento.proteinas && alimento.lipidos > alimento.carbohidratos) {
+                alimento.multiplicarFactor(1 / factorLipidos);
+            }
+        }
     }
 }
 
-//funcion para insertar la info de la lista mes en divs individuales dentro del dom html
+
+function renderBloqueComida(titulo, alimentos) {
+
+  const list = alimentos.filter(a => a);
+  if (list.length === 0) return '';
+  
+  let unidad;
+  let html = `<section class="horario">
+    <h3>${titulo}</h3>
+    <div class="detalle-preparaciones">`;
+  
+    for (const a of list) {
+      unidad = a.plato === "Bebestible" ? "ml" : "g";
+      html += `
+        <div class="item-comida">
+          <strong>${a.nombre}</strong>
+          <p>${a.descripcionNutricional()}</p>
+          <p>Gramos: ${a.gramaje}${unidad} | Precio: $${a.precio}</p>
+          ${a.descripcion
+            ? `<pre class="preparacion">${formatDescripcion(a.descripcion)}</pre>`
+            : ""}
+        </div>`;
+    }
+  
+  html += `</div></section>`;
+  return html;
+}
+
 async function insertarDivs() {
-    try {
-        // Leer lista mes:
-        let lista = await listaMes(); // Llama a la función para obtener la lista de alimentos del mes
-        let contenedor = document.getElementById("contenedor");
-        contenedor.innerHTML = ''; // Limpia el contenedor antes de agregar nuevos divs
-        // Iterar sobre la lista de días
-        lista.forEach((dia, index) => {
-            contenedor.innerHTML += `
-                <div class="dia">
-                    <h2>Día ${index + 1}</h2>
-                    <h3>Desayuno: ${dia.desayuno.nombre}</h3>
-                    <p>${dia.desayuno.descripcionNutricional()}</p>
-                    
-                    <h3>Colacion Mañana: ${dia.colacionManana.nombre}</h3>
-                    <p>${dia.colacionManana.descripcionNutricional()}</p>
-                    
-                    <h3>Almuerzo: ${dia.almuerzo.nombre}</h3>
-                    <p>${dia.almuerzo.descripcionNutricional()}</p>
-                    
-                    <h3>Once: ${dia.once.nombre}</h3>
-                    <p>${dia.once.descripcionNutricional()}</p>
-                    
-                    <h3>Cena: ${dia.cena.nombre}</h3>
-                    <p>${dia.cena.descripcionNutricional()}</p>
-                </div>
-            `;
-        });
-    } catch (error) {
-        console.error("Error al insertar los divs:", error);
-        // Puedes mostrar un mensaje al usuario si lo deseas
-        const contenedor = document.getElementById("contenedor");
-        contenedor.innerHTML = '<p>Ocurrió un error al cargar los datos. Por favor, inténtalo de nuevo más tarde.</p>';
+  try {
+    const lista = await listaMes();
+    const cont = document.getElementById("contenedor");
+    cont.innerHTML = "";
+
+    lista.forEach((dia, i) => {
+      let html = `<div class="dia"><h2>Día ${i + 1}</h2>`;
+
+
+      html += renderBloqueComida("Desayuno", [
+        dia.desayunoFondo,
+        dia.desayunoAcom,
+        dia.desayunoBebes
+      ]);
+
+
+      html += renderBloqueComida("Colación mañana", [
+        dia.colacionMananaFondo,
+        dia.colacionMananaAcom,
+        dia.colacionMananaFruta,
+        dia.colacionMananaBebes
+      ]);
+
+
+      html += renderBloqueComida("Almuerzo", [
+        dia.entrada,
+        dia.almuerzoFondo,
+        dia.almuerzoAcom,
+        dia.postre,
+        dia.almuerzoBebes
+      ]);
+
+      html += renderBloqueComida("Colación tarde", [
+        dia.colacionTarde
+      ]);
+
+
+      html += renderBloqueComida("Once", [
+        dia.onceFondo,
+        dia.onceAcom
+      ]);
+
+
+      html += renderBloqueComida("Cena", [
+        dia.cenaFondo,
+        dia.cenaAcom
+      ]);
+
+
+      html += `
+        <table class="resumen-dia">
+          <tr><th></th><th>Calorías</th><th>Prot.</th><th>Carb.</th><th>Lip.</th></tr>
+          <tr>
+            <td>Aporte</td>
+            <td>${dia.caloriasTotales}</td>
+            <td>${dia.proteinasTotales}</td>
+            <td>${dia.carbohidratosTotales}</td>
+            <td>${dia.lipidosTotales}</td>
+          </tr>
+          <tr>
+            <td>Necesidades</td>
+            <td>${dia.paciente.calorias}</td>
+            <td>${dia.paciente.proteinas}</td>
+            <td>${dia.paciente.carbohidratos}</td>
+            <td>${dia.paciente.lipidos}</td>
+          </tr>
+          <tr>
+            <td>Adecuación %</td>
+            <td>${dia.adecuacionCalorias()}</td>
+            <td>${dia.adecuacionProteinas()}</td>
+            <td>${dia.adecuacionCarbohidratos()}</td>
+            <td>${dia.adecuacionLipidos()}</td>
+          </tr>
+        </table>
+      `;
+
+      html += `</div>`; 
+      cont.innerHTML += html;
+    });
+
+    if (lista.length) {
+      document.getElementById('btnPDF').style.display = 'inline-block';
     }
+  } catch (err) {
+    console.error("⚠️ Error en insertarDivs:", err);
+    document.getElementById("contenedor").innerHTML =
+      '<p>Ocurrió un error al cargar los datos. Por favor, inténtalo de nuevo más tarde.</p>';
+  }
 }
 
-//Calculos dieteticos y validaciones:
+function formatDescripcion(txt) {
+  return txt
+    .replace(/^Preparación:\s*/, "Preparación:\n")
+    .replace(/INGREDIENTES/, "\nINGREDIENTES")
+    .replace(/\*\s*/g, "\n* ")
+    .replace(/Preparación [^:]+:/, match => `\n${match}`)
+    .replace(/(\d+\.)\s*/g, "\n$1 ");
+}
+
+
 
 //Formula Harris Benedict
 
@@ -205,7 +400,6 @@ function harrisBenedict(peso, altura, edad, sexo, actividadFisica){
     if (isNaN(resultado)){
         return 'Resultado no es un Número, favor revise si los argumentos son válidos';
     } else return resultado;
-      //revisar condiciones si este resultado es NaN.
     
 }
 
@@ -226,11 +420,10 @@ function actividadFisica(param){
 
 
 function sexo(sexo){
-    //Funcion para transformar el valor recibido por el front a un numero (1 o 2):
-    let sexoMayus = sexo.toUpperCase(); //transforma en mayuscula el valor recibido por parametro
-    let masculino = ['HOMBRE', 'MASCULINO']; //opciones validas para el sexo masculino
-    let femenino = ['MUJER', 'FEMENINO']; //opciones validas para el genero femenino
-    let genero = 0; //inicializamos variable que sera retornada en caso positivo
+    let sexoMayus = sexo.toUpperCase(); 
+    let masculino = ['HOMBRE', 'MASCULINO']; 
+    let femenino = ['MUJER', 'FEMENINO']; 
+    let genero = 0; 
     if (masculino.includes(sexoMayus)){
         genero = 1;
     } 
@@ -244,7 +437,6 @@ function sexo(sexo){
 
 
 function edad(edad){
-    //revisamos que la edad este en el rango de adultez:
     if ((edad >= 18) && (edad < 60)){
         return edad;
     }
@@ -253,19 +445,18 @@ function edad(edad){
 
 
 function altura(altura){
-    //revisamos que el paciente tenga anotados sus datos de altura en centimetros:
     if ((altura > 121) && (altura < 275)){
         return altura;
     } else return 'Por favor, escriba la altura en centimetros.';
 }
 
-function peso(peso){ //Se revisa que el paciente tenga el peso dentro del rango a trabajar.
+function peso(peso){
     if ((peso >= 20) && (peso < 200)){
         return peso;
     } else return 'Por favor indique su peso correctamente (en Kilogramos).'
 }
 
-function imc(peso, altura){ //Clasifica el IMC del individuo segun la formula.
+function interpretarImc(peso, altura){ 
     
     let resultado = '';
     let talla = altura/100;
@@ -296,16 +487,65 @@ function imc(peso, altura){ //Clasifica el IMC del individuo segun la formula.
 
 }
 
-function requerimiento(funcion){ //Esta funcion recibe de parametro el resultado de la funcion Harris-Benedict 
-// y almacena los requerimientos de energia, proteina, carbohidratos y lipidos en una lista.
-    
+function requerimiento(funcion){ 
     let listaRequerimientos = [];
     let calorias = funcion;
-    let proteinas =(funcion*0.4)/4;
-    let carbos = (funcion*0.3)/4;
+    let proteinas =(funcion*0.3)/4;
+    let carbos = (funcion*0.4)/4;
     let lipidos = (funcion*0.3)/9;
 
     listaRequerimientos.push(calorias, Math.round(proteinas), Math.round(carbos), Math.round(lipidos));
     
     return listaRequerimientos;
-}
+  }
+
+async function balancearDia(dia) {
+    const MAX_ITERS = 5;
+    for (let iter = 0; iter < MAX_ITERS; iter++) {
+      if (dia.cumplimientoAdecuacion()) return true;
+      const adeCar = dia.adecuacionCarbohidratos();
+      const adeLip = dia.adecuacionLipidos();
+  
+      let culpable, macro, filtro;
+      if (adeCar > 110) {
+        culpable = dia.maxPor('carbohidratos');
+        macro = 'carbohidratos';
+      } else if (adeLip > 110) {
+        culpable = dia.maxPor('lipidos');
+        macro = 'lipidos';
+      } else {
+        break;
+      }
+  
+      filtro = macro === 'carbohidratos'
+        ? `&alto_proteina=true&max_carbo=${Math.floor(culpable.carbohidratos)}`
+        : `&alto_proteina=true&max_lip=${Math.floor(culpable.lipidos)}`;
+  
+      const sustitutoJSON = await fetch(
+        `http://localhost:3000/api/alimento?horario=${culpable.horario}${filtro}`
+      ).then(r => {
+        if (!r.ok) throw new Error('No hay sustituto disponible');
+        return r.json();
+      });
+
+      const nuevo = new Alimento(
+        sustitutoJSON.id,
+        sustitutoJSON.horario,
+        sustitutoJSON.tipo,
+        sustitutoJSON.nombre,
+        sustitutoJSON.calorias,
+        sustitutoJSON.proteinas,
+        sustitutoJSON.carbohidratos,
+        sustitutoJSON.lipidos,
+        sustitutoJSON.precio,
+        sustitutoJSON.gramaje,
+        sustitutoJSON.descripcion
+      );
+      dia.replaceAlimento(culpable.horario, nuevo);
+      dia.recalcularTotales();
+    }
+    return dia.cumplimientoAdecuacion();
+  }
+
+ 
+  

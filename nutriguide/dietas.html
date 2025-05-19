@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriApp</title>
+    <link rel="stylesheet" href="estiloPopUp.css"/>
+    <link rel="stylesheet" href="dietas.css"/>
+</head>
+<body>
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="entrada.html">Inicio</a> |
+            <a href="registroUsuarios.html">Registrarse</a> |
+            <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+        </p>
+    </nav>
+    <div id="encabezadoDieta"></div>
+    <button onclick="insertarDivs()">Generar Plan de Alimentación</button>
+    <button id="btnPDF" style="display: none; margin-left: 1rem;">Exportar a PDF</button>
+    <div id="contenedor"></div>
+    <div id="chatGPT" class="chat-container">
+      <div class="chat-input">
+        <label for="pregunta"><strong>Recordatorio 24 h:</strong></label>
+        <textarea id="pregunta" placeholder="Escribe lo que consumió en 24 h…"></textarea>
+        <button id="botonChat" onclick="preguntaGPT()">Enviar</button>
+      </div>
+      <div id="respuesta" class="chat-output">
+        
+      </div>
+      <div id="anamnesis" class="chat-container">
+      <div class="chat-input">
+        <h2>Alergias Alimentarias</h2>
+        <textarea id="alergias" placeholder="Describe aquí las alergias alimentarias del paciente…"></textarea>
+      </div>
+      <div class="chat-input">
+        <h2>Preferencias Alimentarias</h2>
+        <textarea id="preferencias-alimentarias" placeholder="Describe aquí gustos y aversiones culinarias…"></textarea>
+      </div>
+      <div class="chat-input">
+        <h2>Anamnesis Social (Contexto Socioeconómico)</h2>
+        <textarea id="anamnesis-social" placeholder="Contexto socioeconómico del paciente…"></textarea>
+      </div>
+      <div id="planGPT" class="chat-container" style="margin-top:2rem">
+      <button onclick="generatePlan()">Generar Plan de Alimentación</button>
+      <div id="respuestaPlan" class="chat-output"></div>
+    </div>
+    </div>
+    </div>
+    <script>
+      const alergias = document.getElementById('alergias').value;
+      const preferencias = document.getElementById('preferencias-alimentarias').value;
+      const contexto = document.getElementById('anamnesis-social').value;
+    </script>
+    <script type="module">
+      import { generatePlan } from './dietas.js';
+      window.generatePlan = generatePlan;
+    </script>
+    <script type="module" src="sesion.js"></script>
+    <script type="module" src="interfazUsuario.js"></script>
+    <script src="clases.js"></script>
+    <script src="main.js"></script>
+    <script type="module" src="dietas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+</body>
+</html>

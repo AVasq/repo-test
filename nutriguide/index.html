@@ -10,13 +10,60 @@
     <div id="contenedor"></div>
     <a href="formulario.html">Registro de Pacientes</a>
     <a href="login.html">Log in</a>
-    <a href="usuarios.html">Registro de Usuarios</a>
+    <a href="registroUsuarios.html">Registro de Usuarios</a>
+    <a href="entrada.html">Pagina de inicio</a>
+    <div id="pacienteInfo">
+        <p>Paciente: 
+            <span id="pacienteDatos"></span>
+        </p>
+    </div>
     
-    <!-- Cargar el archivo de clases -->
+
     <script src="clases.js"></script>
-    <!-- Cargar el archivo de consultas -->
+    <script>
+        let paciente = new Paciente(
+            1, 
+            2, 
+            "Agustin", 
+            "Vasquez", 
+            "16.812.058-3", 
+            75, 
+            1.75, 
+            1, 
+            37, 
+            1.22, 
+            1700, 
+            50, 
+            100, 
+            34, 
+            18, 
+            16, 
+            18, 
+            12, 
+            22, 
+            102
+        );
+        function mostrarPaciente() {
+            const pacienteDatos = document.getElementById("pacienteDatos");
+            pacienteDatos.innerHTML = `
+                ${paciente.nombre} ${paciente.apellido}, 
+                IMC: ${paciente.clasificacionImc()}, 
+                PCT: ${paciente.clasificacionPCT()}, 
+                CMB: ${paciente.cmb()}, 
+                AMB: ${paciente.amb()}, 
+                Clasificacion AMB: ${paciente.clasificacionAMB()}, 
+                Clasificacion CC: ${paciente.clasificacionCC()}, 
+                Densidad Corporal: ${paciente.densidadCorporal()}, 
+                % Grasa Corporal: ${paciente.porcentajeGrasaCorporal()}%, 
+                Clasificacion Grasa Corporal: ${paciente.clasificacionGC()}
+            `;
+        }
+
+        mostrarPaciente();
+    </script>
+
     <script src="querys.js"></script>
-    <!-- Cargar el archivo principal -->
+
     <script src="main.js"></script>
 </body>
 </html>

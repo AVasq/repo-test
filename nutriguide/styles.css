@@ -1,0 +1,117 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+  background: linear-gradient(to bottom, #ffffff 0%, #999999 100%);
+}
+
+#barraNav{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  z-index: 100;
+}
+
+#barraNav #logo img {
+  height: 40px;
+}
+
+#barraNav #enlaces a {
+  color: #e03e2d;  
+  text-decoration: none;
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+#barraNav #enlaces a:hover {
+  text-decoration: underline;
+}
+
+body > *:not(#barraNav) {
+  margin-top: 40px; 
+}
+
+#imagenNutriGuide{
+  display: flex;               
+  justify-content: center;      
+  align-items: center; 
+}
+
+#recorte {
+  margin-top: -50px;
+  overflow: hidden;
+  height: 300px;
+  filter: drop-shadow(0px 8px 10px rgba(0, 0, 0, 0.805));
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  position: relative;  
+  margin-top: 80px;   
+  overflow: visible;       
+  gap: 2rem;             
+}
+
+#info1{
+  display: inline-block;    
+  padding: 0.5rem 1rem;    
+  border: 1px solid #ccc;  
+  border-radius: 0.5rem;  
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background: linear-gradient(to bottom, #e3131354, #e6959554);   
+}
+
+.contenedor1 {
+  position: relative;
+  z-index: 2;     
+  top: -100px;
+  left: 1rem; 
+}
+
+.contenedor2 {
+  position: relative;
+  width: 400px; 
+  height: 300px;
+  overflow: visible; 
+  z-index: 1;
+}
+
+
+#imagenSalmon {
+  position: absolute;
+  top: -150px;
+  right: -200px;
+  width: 1000px;      
+  height: auto;
+}
+
+.salmon-img {
+  display: block;
+  width: 1000px;      
+  height: auto;
+}
+
+#comenzar{
+  padding: 10px 20px;
+  background: linear-gradient(to bottom, #039903, #4f954f);
+  letter-spacing: 5px;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  display: block;    
+  margin: 30px 0 0 auto;
+}
+  

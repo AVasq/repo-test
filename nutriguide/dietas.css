@@ -1,0 +1,313 @@
+#barraNav{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    z-index: 100;
+}
+
+#barraNav #logo img {
+    height: 40px;
+}
+
+#barraNav #enlaces a {
+    color: #e03e2d;  
+    text-decoration: none;
+    margin-left: 15px;
+    font-weight: bold;
+}
+  
+#barraNav #enlaces a:hover {
+    text-decoration: underline;
+}
+
+body {
+    padding-top: 60px;   
+}
+
+.dia {
+    max-width: 600px;              
+    margin: 2rem auto;          
+    padding: 1.5rem;               
+    border: 2px solid #666;      
+    border-radius: 8px;            
+    box-shadow:
+      inset 0 2px 4px rgba(0,0,0,0.1),
+      0 4px 12px rgba(0,0,0,0.2);
+    background: #fff;              
+}
+
+button[onclick="insertarDivs()"] {
+    display: block;               
+    margin: 2rem auto;             
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: rgba(0, 128, 0, 0.6); 
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+  
+button[onclick="insertarDivs()"]:hover {
+    background: rgba(0, 128, 0, 0.8);
+}
+
+#btnPDF{
+  display: inline-block;                
+    margin: 2rem 0;            
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    background: rgba(158, 21, 0, 0.577); 
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.5s;
+}
+
+  .chat-container label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  #pregunta {
+    resize: vertical;        
+    min-height: 4rem;        
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  #pregunta:focus {
+    border-color: #0077cc;
+    box-shadow: 0 0 4px rgba(0,119,204,0.3);
+  }
+  
+  #botonChat, #botonPlan {
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  #botonChat:hover {
+    background-color: #005fa3;
+  }
+
+  #botonPlan {
+    background-color: #14c811;
+  }
+
+  #botonPlan:hover {
+    background-color: #0e980c;
+  }
+
+  #respuesta {
+    background: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+  
+  #respuesta p {
+    margin: 0.75rem 0;
+  }
+  
+  #respuesta h3 {
+    font-size: 1.2rem;
+    color: #005f99;
+    margin-bottom: 0.5rem;
+  }
+  
+  #respuesta table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+  #respuesta th, #respuesta td {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+  }
+  #respuesta th {
+    background: #e0e0e0;
+    text-align: left;
+  }
+  
+  .chat-container {
+    gap: 50px;               
+    margin-top: 2rem;
+  }
+  
+  .chat-input,
+  .chat-output {
+    flex: 1;                
+  }
+  
+
+  .chat-input textarea {
+    width: 100%;
+    height: 200px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    font-family: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  }
+  
+
+  .chat-input button {
+    margin-top: 1rem;
+    align-self: flex-start;  
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  
+
+  .chat-output {
+    width: 100%;
+    height: 200px;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fafafa;
+    overflow-y: auto;
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+
+.horario {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: #fafafa;
+}
+
+
+.horario > h3 {
+  color: #e03e2d;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+
+.horario .detalle-preparaciones strong {
+  color: #17e113;
+}
+
+
+.horario .preparacion {
+  background: #fff;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-family: inherit;
+  white-space: pre-wrap;
+  margin-top: 0.5rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+
+.resumen-dia {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  border-radius: 6px;
+  overflow: hidden; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.resumen-dia th,
+.resumen-dia td {
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  text-align: left;
+  background: #fff;
+}
+
+
+.resumen-dia th {
+  background: #fff5f5;
+  color: #e03e2d;
+}
+
+
+.resumen-dia tr:nth-child(even) td {
+  background: #fbfbfb;
+}
+
+#chatGPT {
+  display: flex;
+  flex-direction: column;  
+  align-items: center;         
+  max-width: 800px;            
+  margin: 2rem auto;           
+  padding: 1rem;               
+  border: 1px solid #ccc;     
+  border-radius: 6px;          
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); 
+  background: #fafafa;         
+}
+
+#chatGPT .chat-input,
+#chatGPT .chat-output {
+  width: 100%;
+}
+
+#planGPT {
+  margin-top: 2rem;
+  width: 100%;
+}
+
+#chatGPT button {
+  display: block;
+  margin: 1rem auto 0;
+}
+
+section h3{
+  letter-spacing: 3px;
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+section strong{
+  font-size: large;
+  margin: 20px 40px;
+  
+  justify-content: center;
+}
+
+section p{
+  font-size: small;
+  margin: 20px;
+}
+
+.preparacion{
+  font-size: small;
+  margin: 20px;
+}

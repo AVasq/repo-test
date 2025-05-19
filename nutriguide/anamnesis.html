@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriApp</title>
+    <link rel="stylesheet" href="estiloPopUp.css"/>
+    <link rel="stylesheet" href="dietas.css"/>
+</head>
+<body>
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="entrada.html">Inicio</a> |
+            <a href="registroUsuarios.html">Registrarse</a> |
+            <a href="#" onclick="cerrarSesion()">Cerrar Sesión</a>
+        </p>
+    </nav>
+    <div id="chatGPT" class="chat-container">
+      <div class="chat-input">
+        <form>
+            <h3><strong>Recordatorio 24 h:</strong></h3>
+            <label for="desayuno"><strong>Desayuno</strong></label>
+            <textarea id="desayuno" placeholder="Describa el desayuno del Paciente (hora, alimentos, porciones)"></textarea>
+            <label for="colacionManana"><strong>Colación de la Mañana</strong></label>
+            <textarea id="colacionManana" placeholder="Describa la colación de la mañana del Paciente (hora, alimentos, porciones)"></textarea>
+            <label for="almuerzo"><strong>Almuerzo</strong></label>
+            <textarea id="almuerzo" placeholder="Describa el almuerzo del Paciente (hora, alimentos, porciones)"></textarea>
+            <label for="colacionTarde"><strong>Colación de la Tarde</strong></label>
+            <textarea id="colacionTarde" placeholder="Describa la colacion de la tarde del Paciente (hora, alimentos, porciones)"></textarea>
+            <label for="once"><strong>Once</strong></label>
+            <textarea id="once" placeholder="Describa la once del Paciente (hora, alimentos, porciones)"></textarea>
+            <label for="cena"><strong>Cena</strong></label>
+            <textarea id="cena" placeholder="Describa la cena del Paciente (hora, alimentos, porciones)"></textarea>
+        </form>
+        <button id="botonChat" onclick="preguntaGPT()">Enviar</button>
+      </div>
+      <div id="respuesta" class="chat-output">
+        
+      </div>
+      <button id="btnDescargar" style="display: none;">Descargar Dieta en PDF</button>
+      <div id="anamnesis" class="chat-container">
+      <div class="chat-input">
+        <h2>Alergias Alimentarias</h2>
+        <textarea id="alergias" placeholder="Describe aquí las alergias alimentarias del paciente…"></textarea>
+      </div>
+      <div class="chat-input">
+        <h2>Preferencias Alimentarias</h2>
+        <textarea id="preferencias-alimentarias" placeholder="Describe aquí gustos y aversiones culinarias…"></textarea>
+      </div>
+      <div class="chat-input">
+        <h2>Anamnesis Social (Contexto Socioeconómico)</h2>
+        <textarea id="anamnesis-social" placeholder="Contexto socioeconómico del paciente…"></textarea>
+      </div>
+      <div id="planGPT" class="chat-container" style="margin-top:2rem">
+      <button id="botonAnamnesis">Enviar Anamnesis</button>
+      <div id="respuestaPlan" class="chat-output"></div>
+    </div>
+    </div>
+    </div>
+    <script>
+      const alergias = document.getElementById('alergias').value;
+      const preferencias = document.getElementById('preferencias-alimentarias').value;
+      const contexto = document.getElementById('anamnesis-social').value;
+    </script>
+    <script type="module">
+      import { generatePlan } from './dietas.js';
+      window.generatePlan = generatePlan;
+    </script>
+    <script type="module" src="sesion.js"></script>
+    <script type="module" src="interfazUsuario.js"></script>
+    <script src="clases.js"></script>
+    <script type="module" src="dietas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+        const paciente = JSON.parse(localStorage.getItem('pacienteAnamnesis'));
+        if (!ppaciente) {
+        alert('No hay paciente para anamnesis');
+        return window.location.href = 'interfazUsuario.html';}
+        });
+    </script>
+    <script>
+        function descargarPDF() {
+
+            const paciente = JSON.parse(localStorage.getItem('pacienteAnamnesis'));
+            if (!paciente) {
+            alert('No hay paciente seleccionado para generar el PDF.');
+            return;
+            }
+
+            const htmlResp = document.getElementById('respuesta').innerHTML;
+
+            const container = document.createElement('div');
+            container.style.padding = '1rem';
+            container.style.fontFamily = 'Arial, sans-serif';
+
+
+            const logo = document.createElement('img');
+            logo.src = 'images/NutriGuide Logo.png';
+            logo.alt = 'NutriGuide Logo';
+            logo.style.display = 'block';
+            logo.style.margin = '0 auto 1rem';
+            logo.style.width = '150px';
+            container.appendChild(logo);
+            const header = document.createElement('h2');
+            header.innerText = `Acá tienes una Dieta Saludable Inicial para ti, ${paciente.nombre}`;
+            header.style.textAlign = 'center';
+            header.style.marginBottom = '2rem';
+            container.appendChild(header);
+
+            const contentDiv = document.createElement('div');
+            contentDiv.innerHTML = htmlResp;
+            container.appendChild(contentDiv);
+
+            const opt = {
+            margin:       0.5,
+            filename:     `Dieta_${paciente.nombre}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(container).save();
+        }
+
+        document.getElementById('btnDescargar')
+                .addEventListener('click', descargarPDF);
+
+
+        window.descargarPDF = descargarPDF;
+    </script>
+    <script>
+        function limpiarRespuesta() {
+            document.getElementById('respuesta').innerHTML = '';
+        }
+    </script>
+    <script type="module">
+      import { Paciente } from './clases.js';
+
+      window.addEventListener('DOMContentLoaded', () => {
+        // 1) Comprobación de paciente
+        const raw = JSON.parse(localStorage.getItem('pacienteAnamnesis'));
+        if (!raw) {
+          alert('No hay paciente para anamnesis');
+          return window.location.href = 'interfazUsuario.html';
+        }
+
+
+async function preguntaAnamnesis() {
+    const raw = JSON.parse(localStorage.getItem('pacienteAnamnesis'));
+    if (!raw) {
+      alert("No hay paciente seleccionado.");
+      return;
+    }
+    const paciente = new Paciente(
+      raw.id, raw.nutri_id, raw.nombre, raw.apellido, raw.rut,
+      raw.peso, raw.altura, raw.sexo, raw.edad,
+      raw.actFisica,
+      raw.pliegueTricipital, raw.pliegueSubescapular,
+      raw.pliegueSupraIliaco, raw.pliegueBicipital,
+      raw.circunferenciaBraquial, raw.circunferenciaCintura,
+      raw.necesidad, raw.calorias, raw.proteinas, raw.carbohidratos, raw.lipidos
+    );
+
+    const alergias       = document.getElementById('alergias').value.trim()            || '[no especificado]';
+    const preferencias   = document.getElementById('preferencias-alimentarias').value.trim() || '[no especificado]';
+    const contexto       = document.getElementById('anamnesis-social').value.trim()     || '[no especificado]';
+
+    const prompt = `
+Eres un nutricionista chileno experto en anamnesis y diseño de planes alimentarios.
+Utiliza estos datos clínicos, antropométricos y sociales para hacer un diagnóstico breve y
+proponer recomendaciones alimentarias concretas.
+También, genera una dieta para 7 días para el siguiente paciente:
+
+Paciente:
+  Nombre: ${paciente.nombre} ${paciente.apellido}
+  IMC: ${Math.round(paciente.imc())} → ${paciente.clasificacionImc()}
+  PCT: ${paciente.clasificacionPCT()}
+  AMB: ${Math.round(paciente.amb())} cm² → ${paciente.clasificacionAMB()}
+  CC: ${paciente.clasificacionCC()}
+  GC: ${paciente.clasificacionGC()}
+  calorias:  ${paciente.calorias}
+  proteinas: ${paciente.proteinas}
+  carbohidratos: ${paciente.carbohidratos}
+  lipidos: ${paciente.lipidos}
+
+Alergias alimentarias:
+${alergias}
+
+Preferencias/aversiónes culinarias:
+${preferencias}
+
+Contexto socioeconómico:
+${contexto}
+
+Deberás:
+1. Hacer un diagnóstico nutricional basado en IMC, PCT, AMB, CC y GC.
+2. Indicar cómo las alergias y preferencias pueden afectar la dieta.
+3. Sugerir ajustes o pautas (hasta 3 puntos clave) para el plan de alimentación.
+4. Crear una dieta que considere los desayunos, colaciones (de mañana y tarde), almuerzos, onces y cenas de 7 días. 
+Para ello, deberás:
+  -Seleccionar alimentos por horario (desayuno, colación mañana, almuerzo, colación tarde, once, cena).
+  -Utilizar alimentos comúnmente consumidos por la población Chilena.
+  -Calcular totales diarios y adecuación (%) de cada macro.
+  -Ajustar (reemplazos, factores, inserciones) hasta cumplir 90 %–110 % en todos los macros.
+  -Solo emitir la planificación final cuando todas las adecuaciones estén en rango.
+  Salida Esperada:
+  Día 1
+  Horario: Desayuno
+  Alimentos: [fondo] + [acompañamiento] + [bebestible]
+  … (etc, ver formato completo) …
+  Tabla Resumen del Día
+              Calorías  Prot.  Carb.  Lípidos
+  Aporte      X        Y      Z      W
+  Requerim.   ${paciente.calorias}  ${paciente.proteinas}  ${paciente.carbohidratos}  ${paciente.lipidos}
+  % Adecuación  X/${paciente.calorias}×100 …”
+  Día 2
+  Alimentos: [fondo] + [acompañamiento] + [bebestible]
+  … (etc, ver formato completo) …
+  Tabla Resumen del Día
+              Calorías  Prot.  Carb.  Lípidos
+  Aporte      X        Y      Z      W
+  Requerim.   ${paciente.calorias}  ${paciente.proteinas}  ${paciente.carbohidratos}  ${paciente.lipidos}
+  % Adecuación  X/${paciente.calorias}×100 …”
+  ... Días 3, 4, 5, 6 y 
+  Día 7
+  Alimentos: [fondo] + [acompañamiento] + [bebestible]
+  … (etc, ver formato completo) …
+  Tabla Resumen del Día
+              Calorías  Prot.  Carb.  Lípidos
+  Aporte      X        Y      Z      W
+  Requerim.   ${paciente.calorias}  ${paciente.proteinas}  ${paciente.carbohidratos}  ${paciente.lipidos}
+  % Adecuación  X/${paciente.calorias}×100 …”
+    REGLAS OBLIGATORIAS:
+    -NO emitas tu respuesta a no ser que TODOS los valores del % Adecuación esten entre 90 y 110%. De no lograr estos valores de adecuación, 
+  recalcula con diferentes gramos de los alimentos, utiliza otros alimentos, hasta lograr el objetivo de adecuación. SOLO cuando tengas adecuados 
+  TODOS los valores (de los 7 días), emite tu respuesta.
+    -Se solicitan SI O SI 7 días con el formato de salida esperado. NO emitas respuesta si no informas los 7 días de dieta.
+    -En tu respuesta, no muestres resultados preliminares, solo la dieta final con los % de adecuacion entre 90 y 110%, con la salida esperada que se te solicitó.
+    -Formatea la respuesta como un breve informe justificado en texto plano, sin símbolos especiales.
+
+`;
+
+    const out = document.getElementById('respuestaPlan');
+    out.innerText = "Analizando anamnesis y generando recomendaciones…";
+    document.getElementById('btnDescargar').style.display = 'none';
+
+
+    try {
+      const res = await fetch('http://localhost:3000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mensaje: prompt })
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const { respuesta } = await res.json();
+      out.innerText = respuesta;
+
+      document.getElementById('btnDescargar').style.display = 'block';
+    } catch (err) {
+      console.error('Error enviando anamnesis a ChatGPT:', err);
+      out.innerText = "Error al conectar con la IA";
+    }
+  }
+
+        document.getElementById('botonAnamnesis')
+                .addEventListener('click', preguntaAnamnesis);
+      });
+    </script>
+</body>
+</html>

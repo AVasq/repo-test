@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-// Crea una nueva instancia de Pool
+
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
@@ -24,6 +24,20 @@ async function obtenerAlimentoTipo(horario, tipo) {
     const response = await fetch(`http://localhost:3000/api/alimento?horario=${horario}&tipo=${tipo}`);
     if (!response.ok) {
         throw new Error('Error al obtener el alimento');
+    }
+    return await response.json();
+}
+
+async function registrarUsuario(rut, nombre, apellido, correo, contrasena) {
+    const response = await fetch('http://localhost:3000/registrarUsuario', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ rut, nombre, apellido, correo, contrasena }),
+    });
+    if (!response.ok) {
+        throw new Error('Error al registrar el usuario');
     }
     return await response.json();
 }

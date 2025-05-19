@@ -26,8 +26,10 @@ function validarNombre(nombre){
     if (nombre.trim() === ""){
         return false;
     } else {
-        return true;
-    }
+        if (nombre.length < 3){
+            return false;}
+    }   
+    return true;
 }
 
 
@@ -35,51 +37,30 @@ function validarApellido(apellido){
     if (apellido.trim() === ""){
         return false;
     } else {
-        return true;
-    }
+        if (apellido.length < 3){
+            return false;}
+    }   
+    return true;
 }
 
-/*Funcion estandar para validar Rut
-validarRut = (rutIngresado) => {
-    // Eliminar espacios y guiones
-    rut = rutIngresado.replace(/\s+/g, '').replace(/-/, '');
-    // Separar el número y el dígito verificador
-    const cuerpo = rut.slice(0, -1);
-    const dv = rut.slice(-1).toUpperCase();
-    // Validar que el cuerpo sea un número
-    if (!/^\d+$/.test(cuerpo)) {
-        return false;
-    }
-    // Calcular el dígito verificador
-    let suma = 0;
-    let multiplicador = 2;
-    for (let i = cuerpo.length - 1; i >= 0; i--) {
-        suma += parseInt(cuerpo[i]) * multiplicador;
-        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
-    }
-    const dvCalculado = 11 - (suma % 11);
-    const dvFinal = dvCalculado === 10 ? 'K' : dvCalculado === 11 ? '0' : dvCalculado.toString();
-    // Comparar el dígito verificador ingresado con el calculado
-    return dv === dvFinal;
-}*/
 
 const validarRut = (rutIngresado) => {
-    // Expresión regular para validar el formato del RUT
+
     const formatoValido = /^\d{1,2}\.\d{3}\.\d{3}-[\dK]$/;
-    // Verificar si el RUT coincide con el formato válido
+
     if (!formatoValido.test(rutIngresado)) {
-        return false; // Si no coincide, es inválido
+        return false; 
     }
-    // Eliminar espacios y guiones
+
     rut = rutIngresado.replace(/\s+/g, '').replace(/[-.]/g, '');
-    // Separar el número y el dígito verificador
+
     const cuerpo = rut.slice(0, -1);
     const dv = rut.slice(-1).toUpperCase();
-    // Validar que el cuerpo sea un número
+
     if (!/^\d+$/.test(cuerpo)) {
         return false;
     }
-    // Calcular el dígito verificador
+
     let suma = 0;
     let multiplicador = 2;
     for (let i = cuerpo.length - 1; i >= 0; i--) {
@@ -89,71 +70,42 @@ const validarRut = (rutIngresado) => {
     
     const dvCalculado = 11 - (suma % 11);
     const dvFinal = dvCalculado === 10 ? 'K' : dvCalculado === 11 ? '0' : dvCalculado.toString();
-    
-    // Comparar el dígito verificador ingresado con el calculado
+
     return dv === dvFinal;
 }
 
-//Validar contraseña
-
-/*validarContrasena = (contrasena) => {
-    if (contrasena.length <8){
-        return false;
-    }
-
-// Ejemplo de uso
-const contrasenaIngresada = "Ejemplo@123"; // Cambia este valor por la contraseña que deseas validar
-if (validarContrasena(contrasenaIngresada)) {
-    console.log("La contraseña es válida.");
-} else {
-    console.log("La contraseña es inválida.");
-}
-}*/
-
 const validarContrasena = (contrasena) => {
-    // Verificar longitud mínima
+
     if (contrasena.length < 8) {
         return false;
     }
     
-    // Verificar que contenga al menos una letra mayúscula
     if (!/[A-Z]/.test(contrasena)) {
         return false;
     }
     
-    // Verificar que contenga al menos una letra minúscula
     if (!/[a-z]/.test(contrasena)) {
         return false;
     }
     
-    // Verificar que contenga al menos un número
     if (!/[0-9]/.test(contrasena)) {
         return false;
     }
     
-    // Verificar que contenga al menos un carácter especial
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(contrasena)) {
         return false;
     }
     
-    // Si todas las condiciones se cumplen, la contraseña es válida
     return true;
 }
 
-//Funcion estandar para validar correos electronicos
+
 
 validarCorreo = (correo) => {
-    // Expresión regular para validar el formato del correo electrónico
+
     const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regex.test(correo);
 }
-/* Ejemplo de uso
-const correoIngresado = "ejemplo@dominio.com"; // Cambia este valor por el correo que deseas validar
-if (validarCorreo(correoIngresado)) {
-    console.log("El correo es válido.");
-} else {
-    console.log("El correo es inválido.");
-}*/
 
 function validarContraseñas(contraseña1, contraseña2){
     if (contraseña1.trim() === "" || contraseña2.trim() === ""){
@@ -212,18 +164,51 @@ function pruebas(){
 
 }
 
-
-function enviarDatos(){
-    let nombre = document.getElementById("nombre").value;
-    let apellido = document.getElementById("apellido").value;
-    let rut = document.getElementById("rut").value;
+async function iniciarSesion(event) {
+    event.preventDefault(); 
     let correo = document.getElementById("correo").value;
-    let contraseña1 = document.getElementById("contraseña1").value;
-    let contraseña2 = document.getElementById("contraseña2").value;
+    let contrasena = document.getElementById("password").value;
 
-    if (validarNombre(nombre) && validarApellido(apellido) && validarRut(rut) && validarCorreo(correo) && validarContrasena(contraseña1) && validarContraseñas(contraseña1,contraseña2)){
-        //Continuar mañana
-    } 
+    if (!validarCorreo(correo)) {
+        mostrarDivEmergente("Correo inválido.");
+        return;
+    }
+    if (!validarContrasena(contrasena)) {
+        mostrarDivEmergente("Contraseña inválida.");
+        return;
+    }
 
-
+    try {
+        const response = await fetch('http://localhost:3000/api/iniciarSesion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ correo, contrasena }),
+        });
+        if (!response.ok) {
+            throw new Error('Error al iniciar sesión');
+        }
+        const data = await response.json();
+        if (data.exito) {
+            alert("Inicio de sesion exitoso");
+            mostrarDivEmergente("Inicio de sesión exitoso.");
+        } else {
+            mostrarDivEmergente("Credenciales incorrectas.");
+        }
+    } catch (error) {
+        console.error(error);
+        mostrarDivEmergente("Error en el servidor. Intenta más tarde.");
+    }
 }
+
+function mostrarDivEmergente(mensaje) {
+    document.getElementById('mensaje').innerText = mensaje;
+    document.getElementById('popup').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+}
+function cerrarDivEmergente() {
+    document.getElementById('popup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+

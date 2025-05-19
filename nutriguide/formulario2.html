@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Pacientes</title>
+    <link rel="stylesheet" href="estiloPopUp.css"/>
+    <link rel="stylesheet" href="formulario.css"/>
+</head>
+<body>
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="inicio.html">Inicio</a> |
+            <a href="registro.html">Registrarse</a> |
+            <a href="contacto.html">Contacto</a>
+        </p>
+    </nav>
+    <div class="registro-pacientes">
+        <form id = "formulario" autocomplete="off">
+            <h1>Registro de pacientes</h1>
+            <fieldset>
+                <legend>Datos Personales: </legend>
+                <label for="nombre">Nombre: </label></br>
+                <input type="text" id="nombre" name="nombre" placeholder="Escriba el Nombre del Paciente" required="true"> <!--Los elementos de tipo input nos permiten capturar información sobre un usuario.-->
+                </br>
+                <label for="apellido">Apellido: </label></br>
+                <input type="text" id="apellido" name="apellido" placeholder="Escriba el Apellido del Paciente" required="true"> <!--Los elementos de tipo input nos permiten capturar información sobre un usuario.-->
+                </br>
+                <label for="rut">Rut: </label><br>
+                <input type="text" id="rut" name="rut" placeholder="Ingrese el Rut del Paciente" required="true"><br>
+                <label for="edad">Edad: </label><br>
+                <input type="number" id="edad" name="edad" placeholder="Ingrese la Edad del Paciente" required="true" min="18" max="65"><br>
+                <br/>
+                <label id="genero">Género:</label><br>
+                <input type="radio" id="femenino" name="genero" value="2" required="true">
+                <label for="femenino">Femenino </label>
+                <br>
+                <input type="radio" id="masculino" name="genero" value="1" required="true">
+                <label for="masculino">Masculino </label>
+                <br>
+                </br>
+                <label id="actividadFisica">Nivel de Actividad Física: </label><br>
+                <input type="radio" id="sedentario" name="actividadFisica" value="1.2" required="true">
+                <label for="sedentario">Sedentario </label>
+                <input type="radio" id="pocoActivo" name="actividadFisica" value="1.375" required="true">
+                <label for="pocoActivo">Poco Activo </label>
+                <input type="radio" id="moderado" name="actividadFisica" value="1.55" required="true">
+                <label for="moderado">Moderado </label>
+                <input type="radio" id="activo" name="actividadFisica" value="1.725" required="true">
+                <label for="activo">Activo </label>
+                <input type="radio" id="muyActivo" name="actividadFisica" value="1.9" required="true">
+                <label for="muyActivo">Muy Activo </label>
+                <br/>
+                <br/>
+                <label for="peso">Peso: </label><br>
+                <input type="number" id="peso" name="peso" placeholder="Peso en Kilos" required="true" min="35" max="250"><br>
+                <label for="altura">Altura: </label><br>
+                <input type="number" id="altura" name="altura" placeholder="Altura en centímetros" required="true" min="121" max="250"><br>
+                
+                <label for="circunferenciacintura">Circunferencia de Cintura: </label><br>
+                <input type="number" id="circunferenciacintura" name="circunferenciacintura" placeholder="Ingrese Circunferencia de Cintura del paciente en cms" required="true" min="40" max="200"><br>
+                <label for="circunferenciabrazo">Circunferencia del Brazo: </label><br>
+                <input type="number" id="circunferenciabrazo" name="circunferenciabrazo" placeholder="Ingrese Circunferencia Braquial del paciente en cms" required="true" min="10" max="80"><br>
+                <br>
+                <br>
+                <label for="tricipital">Pliegue Tricipital: </label><br>
+                <input type="number" id="tricipital" name="tricipital" placeholder="Ingrese Pliegue Tricipital del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="subescapular">Pliegue SubEscapular: </label><br>
+                <input type="number" id="subescapular" name="subescapular" placeholder="Ingrese Pliegue SubEscapular del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="suprailiaco">Pliegue SupraIliaco: </label><br>
+                <input type="number" id="suprailiaco" name="suprailiaco" placeholder="Ingrese Pliegue SupraIliaco del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="bicipital">Pliegue Bicipital: </label><br>
+                <input type="number" id="bicipital" name="bicipital" placeholder="Ingrese Pliegue Bicipital del paciente en mms" required="true" min="1" max="60"><br>
+                
+                <label id="necesidadPaciente">El Paciente Requiere: </label><br>
+                <input type="radio" id="disminucion" name="necesidadPaciente" value="1" required="true">
+                <label for="disminucion">Reducir Peso Corporal </label>
+                <input type="radio" id="mantencionPeso" name="necesidadPaciente" value="2" required="true">
+                <label for="mantencionPeso">Cambiar Composición Corporal (mantención de peso) </label>
+                <input type="radio" id="aumentar" name="necesidadPaciente" value="3" required="true">
+                <label for="aumentar">Aumentar Peso Corporal </label>
+                
+            </fieldset>
+                <input type="submit" id="enviar" value="Enviar"> 
+                <input type="submit" id='novalido' formnovalidate="formnovalidate" value="Enviar sin Validar"/>
+                <input type="reset" value="restablecer"/>
+            </fieldset>
+            <img class="imagen-lateral" src="images/20250425_1124_Báscula y Tallímetro_simple.png" alt="imagen-lateral"/>
+        </form>
+    </div>
+    <div id="overlay"></div>
+    <div id="popup">
+        <span class="cerrar" onclick="cerrarDivEmergente()">×</span>
+        <p id="mensaje"></p>
+    </div>
+    <div id="divDatos"></div>
+
+    <script src="mensajes.js"></script>
+    <script type="module" src="clases.js"></script>
+    
+</body>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const p = JSON.parse(localStorage.getItem('pacienteEditar') || 'null');
+  if (!p) {
+    alert('No hay paciente para editar');
+    return window.location.href = 'interfazUsuario.html';
+  }
+
+  document.getElementById('nombre').value   = p.nombre;
+  document.getElementById('apellido').value = p.apellido;
+  document.getElementById('rut').value      = p.rut;
+
+  ['nombre','apellido','rut'].forEach(id =>
+    document.getElementById(id).setAttribute('readonly','readonly')
+  );
+
+  document.getElementById('edad').value = p.edad;
+  document.getElementById('peso').value = p.peso;
+  document.getElementById('altura').value = p.altura;
+  document.getElementById('circunferenciacintura').value = p.circunferenciaCintura;
+  document.getElementById('circunferenciabrazo').value = p.circunferenciaBraquial;
+  document.getElementById('tricipital').value     = p.pliegueTricipital;
+  document.getElementById('subescapular').value   = p.pliegueSubescapular;
+  document.getElementById('suprailiaco').value    = p.pliegueSupraIliaco;
+  document.getElementById('bicipital').value      = p.pliegueBicipital;
+
+  document.getElementsByName('genero').forEach(radio => {
+    if (radio.value === String(p.sexo)) radio.checked = true;
+    radio.disabled = true;
+  });
+
+  document.getElementsByName('actividadFisica').forEach(radio => {
+    if (radio.value === String(p.actFisica)) radio.checked = true;
+  });
+
+  document.getElementsByName('necesidadPaciente').forEach(radio => {
+    if (radio.value === String(p.necesidad)) radio.checked = true;
+  });
+});
+
+</script>
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const p = JSON.parse(localStorage.getItem('pacienteEditar')||'null');
+  if(!p) {
+    alert('No hay paciente para editar');
+    return window.location.href='interfazUsuario.html';
+  }
+
+  const form = document.getElementById('formulario');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+
+    const body = {
+      edad:                parseInt(document.getElementById('edad').value,10),
+      peso:                parseInt(document.getElementById('peso').value,10),
+      altura:              parseInt(document.getElementById('altura').value,10),
+      sexo:                parseInt(document.querySelector('input[name="genero"]:checked').value,10),
+      actFisica:           parseFloat(document.querySelector('input[name="actividadFisica"]:checked').value),
+      pliegueTricipital:   parseInt(document.getElementById('tricipital').value,10),
+      pliegueSubescapular: parseInt(document.getElementById('subescapular').value,10),
+      pliegueSuprailiaco:  parseInt(document.getElementById('suprailiaco').value,10),
+      pliegueBicipital:    parseInt(document.getElementById('bicipital').value,10),
+      circunferenciaBraquial: parseInt(document.getElementById('circunferenciabrazo').value,10),
+      circunferenciaCintura:  parseInt(document.getElementById('circunferenciacintura').value,10),
+      necesidad:           parseInt(document.querySelector('input[name="necesidadPaciente"]:checked').value,10)
+    };
+
+    try {
+      const resp = await fetch(`http://localhost:3000/api/paciente/${p.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!resp.ok) {
+        const text = await resp.text();
+        throw new Error(`Error ${resp.status}: ${text}`);
+      }
+      const updated = await resp.json();
+      alert('Paciente actualizado correctamente');
+      window.location.href = 'interfazUsuario.html';
+    } catch (err) {
+      console.error(err);
+      alert('No se pudo actualizar: '+err.message);
+    }
+  });
+});
+</script>
+
+</html>

@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Pacientes</title>
+    <title>Registro de Usuarios</title>
     <link rel="stylesheet" href="../css/estilos11.css"/>
 </head>
 <body>
     <h1>Registro de Usuarios</h1>
     <div>
-        <form id = "formulario" action="mi_servidor" autocomplete="off"><!--Si solo agregamos form, no se visualiza nada dentro del navegador-->
+        <form id = "formulario" action="mi_servidor" autocomplete="off">
             <fieldset>
                 <legend>Datos Personales: </legend>
                 <label for="nombre">Nombre: </label></br>
-                <input type="text" id="nombre" name="nombre" placeholder="Escriba su Nombre" required="true"> <!--Los elementos de tipo input nos permiten capturar información sobre un usuario.-->
+                <input type="text" id="nombre" name="nombre" placeholder="Escriba su Nombre" required="true"> 
                 </br>
                 <label for="apellido">Apellido: </label></br>
-                <input type="text" id="apellido" name="apellido" placeholder="Escriba su Apellido" required="true"> <!--Los elementos de tipo input nos permiten capturar información sobre un usuario.-->
+                <input type="text" id="apellido" name="apellido" placeholder="Escriba su Apellido" required="true"> 
                 </br>
                 <label for="rut">Rut: </label><br>
                 <input type="text" id="rut" name="rut" placeholder="Ingrese su Rut" required="true"><br>
@@ -29,8 +29,7 @@
                 
                 <br/>
                 <br/>
-                <input type="submit" id="enviar" value="Enviar"> <!--El input tipo submit enviara la informacion capturada
-                a un servidor.-->
+                <input type="submit" id="enviar" value="Enviar"> 
                 <input type="submit" id='novalido' formnovalidate="formnovalidate" value="Enviar sin Validar"/>
                 <input type="reset" value="restablecer"/>
             </fieldset>

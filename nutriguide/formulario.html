@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Pacientes</title>
-    <link rel="stylesheet" href="../css/estilos11.css"/>
+    <link rel="stylesheet" href="estiloPopUp.css"/>
+    <link rel="stylesheet" href="formulario.css"/>
 </head>
 <body>
-    <h1>Registro de pacientes</h1>
-    <div>
-        <form id = "formulario" action="mi_servidor" autocomplete="off"><!--Si solo agregamos form, no se visualiza nada dentro del navegador-->
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="inicio.html">Inicio</a> |
+            <a href="registro.html">Registrarse</a> |
+            <a href="contacto.html">Contacto</a>
+        </p>
+    </nav>
+    <div class="registro-pacientes">
+        <form id = "formulario" autocomplete="off">
+            <h1>Registro de pacientes</h1>
             <fieldset>
                 <legend>Datos Personales: </legend>
                 <label for="nombre">Nombre: </label></br>
@@ -18,12 +26,10 @@
                 <label for="apellido">Apellido: </label></br>
                 <input type="text" id="apellido" name="apellido" placeholder="Escriba el Apellido del Paciente" required="true"> <!--Los elementos de tipo input nos permiten capturar información sobre un usuario.-->
                 </br>
+                <label for="rut">Rut: </label><br>
+                <input type="text" id="rut" name="rut" placeholder="Ingrese el Rut del Paciente" required="true"><br>
                 <label for="edad">Edad: </label><br>
-                <input type="number" id="edad" name="edad" placeholder="Ingrese su Edad" required="true" min="18" max="65"><br>
-                <label for="peso">Peso: </label><br>
-                <input type="number" id="peso" name="peso" placeholder="Peso en Kilos" required="true" min="35" max="250"><br>
-                <label for="altura">Altura: </label><br>
-                <input type="number" id="altura" name="altura" placeholder="Altura en centímetros" required="true" min="121" max="250"><br>
+                <input type="number" id="edad" name="edad" placeholder="Ingrese la Edad del Paciente" required="true" min="18" max="65"><br>
                 <br/>
                 <label id="genero">Género:</label><br>
                 <input type="radio" id="femenino" name="genero" value="2" required="true">
@@ -46,12 +52,52 @@
                 <label for="muyActivo">Muy Activo </label>
                 <br/>
                 <br/>
-                <input type="submit" id="enviar" value="Enviar"> <!--El input tipo submit enviara la informacion capturada
-                a un servidor.-->
+                <label for="peso">Peso: </label><br>
+                <input type="number" id="peso" name="peso" placeholder="Peso en Kilos" required="true" min="35" max="250"><br>
+                <label for="altura">Altura: </label><br>
+                <input type="number" id="altura" name="altura" placeholder="Altura en centímetros" required="true" min="121" max="250"><br>
+                
+                <label for="circunferenciacintura">Circunferencia de Cintura: </label><br>
+                <input type="number" id="circunferenciacintura" name="circunferenciacintura" placeholder="Ingrese Circunferencia de Cintura del paciente en cms" required="true" min="40" max="200"><br>
+                <label for="circunferenciabrazo">Circunferencia del Brazo: </label><br>
+                <input type="number" id="circunferenciabrazo" name="circunferenciabrazo" placeholder="Ingrese Circunferencia Braquial del paciente en cms" required="true" min="10" max="80"><br>
+                <br>
+                <br>
+                <label for="tricipital">Pliegue Tricipital: </label><br>
+                <input type="number" id="tricipital" name="tricipital" placeholder="Ingrese Pliegue Tricipital del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="subescapular">Pliegue SubEscapular: </label><br>
+                <input type="number" id="subescapular" name="subescapular" placeholder="Ingrese Pliegue SubEscapular del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="suprailiaco">Pliegue SupraIliaco: </label><br>
+                <input type="number" id="suprailiaco" name="suprailiaco" placeholder="Ingrese Pliegue SupraIliaco del paciente en mms" required="true" min="1" max="60"><br>
+                <label for="bicipital">Pliegue Bicipital: </label><br>
+                <input type="number" id="bicipital" name="bicipital" placeholder="Ingrese Pliegue Bicipital del paciente en mms" required="true" min="1" max="60"><br>
+                
+                <label id="necesidadPaciente">El Paciente Requiere: </label><br>
+                <input type="radio" id="disminucion" name="necesidadPaciente" value="1" required="true">
+                <label for="disminucion">Reducir Peso Corporal </label>
+                <input type="radio" id="mantencionPeso" name="necesidadPaciente" value="2" required="true">
+                <label for="mantencionPeso">Cambiar Composición Corporal (mantención de peso) </label>
+                <input type="radio" id="aumentar" name="necesidadPaciente" value="3" required="true">
+                <label for="aumentar">Aumentar Peso Corporal </label>
+                
+            </fieldset>
+                <input type="submit" id="enviar" value="Enviar"> 
                 <input type="submit" id='novalido' formnovalidate="formnovalidate" value="Enviar sin Validar"/>
                 <input type="reset" value="restablecer"/>
             </fieldset>
+            <img class="imagen-lateral" src="images/20250425_1124_Báscula y Tallímetro_simple.png" alt="imagen-lateral"/>
         </form>
-    </div> 
+    </div>
+    <div id="overlay"></div>
+    <div id="popup">
+        <span class="cerrar" onclick="cerrarDivEmergente()">×</span>
+        <p id="mensaje"></p>
+    </div>
+    <div id="divDatos"></div>
+
+    <script src="mensajes.js"></script>
+    <script type="module" src="clases.js"></script>
+    <script type="module" src="datosPaciente.js"></script>
+    
 </body>
 </html>

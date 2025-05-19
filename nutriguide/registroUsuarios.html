@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuarios</title>
+    <link rel="stylesheet" href="estiloPopUp.css"/>
+    <link rel="stylesheet" href="registroUsuarios.css"/>
+</head>
+<body>
+    <nav id="barraNav">
+        <p id="logo"><img src="images/Salmon Lunch Plate Simple.png" title="Salmón"></p>
+        <p id="enlaces"><a href="inicio.html">Inicio</a> |
+            <a href="registro.html">Registrarse</a> |
+            <a href="contacto.html">Contacto</a>
+        </p>
+    </nav>
+    <h1>Registro de Usuarios</h1>
+    <div>
+        <form id="formulario" autocomplete="off">
+            <fieldset>
+                <legend>Datos Personales: </legend><br>
+                <div class="group" data-legend="Escriba sus Datos">
+                    <label for="nombre">Nombre: </label><br>
+                    <input type="text" id="nombre" name="nombre" placeholder="Escriba su Nombre" title = "El nombre debe tener más de 3 letras" required="true"><br><br>
+                    <label for="apellido">Apellido: </label><br>
+                    <input type="text" id="apellido" name="apellido" placeholder="Escriba su Apellido" title = "El apellido debe tener más de 3 letras" required="true"><br><br>
+                    <label for="rut">Rut: </label><br>
+                    <input type="text" id="rut" name="rut" placeholder="Ingrese su Rut" title = "El Formato del Rut debe poseer puntos y guión. Ej: 12.345.678-9" required="true"><br><br>
+                    <label for="correo">Correo Electrónico: </label><br>
+                    <input type="email" id="correo" name="correo" placeholder="Example@mail.com" required="true"><br><br>
+                </div>
+                <div class="group" data-legend="Cree su Contraseña">
+                    <label for="contraseña1">Contraseña: </label><br>
+                    <input type="password" id="contraseña1" name="contraseña1" placeholder="Escriba su Contraseña" title = "La contraseña debe poseer 8 o más caracteres, mayúsculas, minúsculas, números y símbolos. Ej: Contraseña123#%" required="true"><br><br>
+                    <label for="contraseña2">Repita la Contraseña: </label><br>
+                    <input type="password" id="contraseña2" name="contraseña2" placeholder="Repita la Contraseña" required="true"><br><br>
+                </div>
+                <br>
+                <div class="botones">
+                    <input type="submit" id="enviar" value="Enviar" onclick="enviarDatos(event)">
+                    <input type="submit" id='novalido' formnovalidate="formnovalidate" value="Enviar sin Validar"/>
+                    <input type="reset" value="restablecer"/>
+                </div>
+            </fieldset>
+        </form>
+        <img class="imagen-lateral" src="images/20250426_0906_Nutricionista y Báscula_simple.png" alt="nutri"/>
+    </div>
+    <button onclick="mostrarValores()">Presiona Acá</button> 
+    <button onclick="pruebas()">Revisar validez de datos</button>
+    <div id="divDatos"></div>
+    <div id="prueba"></div>
+    <div id="overlay"></div>
+    <div id="popup">
+        <span class="cerrar" onclick="cerrarDivEmergente()">×</span>
+        <p id="mensaje"></p>
+    </div>
+    <script src="querys.js"></script>
+    <script src="datosNutri.js"></script>
+    <script src= "registroUsuarios.js"></script>
+</body>
+</html>
